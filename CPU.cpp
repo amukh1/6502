@@ -7,7 +7,7 @@
 #include "CPU.h"
 
 BYTE Memory::Read(WORD Address) {
-    return (BYTE) 0;
+    return (BYTE) 0x00;
 }
 
 void Memory::init() {
@@ -27,6 +27,7 @@ void CPU::Reset(Memory mem) {
 }
 
 void CPU::Log() {
+    std::cout << "------------------" << std::endl;
     std::cout << "Cycle: " << Cycle << std::endl;
     std::cout << "A: " << (int)A << std::endl;
     std::cout << "X: " << (int)X << std::endl;
@@ -47,3 +48,9 @@ void CPU::Log(std::string s) {
     std::cout << "Cycle: " << Cycle << std::endl;
     std::cout << s << std::endl;
 };
+
+void CPU::Step(Memory mem) {
+    Decode(mem.Read(PC));
+    PC++;
+
+}

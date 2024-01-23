@@ -13,4 +13,5 @@ int main() {
     cpu.Reset(memory);
     std::cout << "---------------------------------------" << std::endl;
     cpu.Log();
+    cpu.Step(memory);
 }

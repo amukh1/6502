@@ -1,8 +1,11 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <map>
 
 using BIT = bool;
 using WORD = unsigned short;
@@ -25,12 +28,15 @@ struct CPU {
 
     int Ticks = 0;
 
+    std::map<BYTE, std::string> Matrix;
+
     void Tick(int n);
     void Reset(Memory mem);
     void Log();
     void Log(std::string s);
-
-    
+    void Decode(BYTE opcode);
+    void Step(Memory mem);
+    void FillMatrix();
 
 };
 
