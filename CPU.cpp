@@ -18,7 +18,7 @@ void CPU::Reset(Memory mem) {
     this->PC = 0xFFFC;
 
     A,X,Y = (BYTE) 0;
-    CF, ZF, ID, DM, BC, OF, NF = (BIT) 0;
+    CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0;
 
     this->SP = (BYTE) 0;
     SP--;
@@ -28,9 +28,9 @@ void CPU::Reset(Memory mem) {
 
 void CPU::Log() {
     std::cout << "Cycle: " << Cycle << std::endl;
-    std::cout << "A: " << A << std::endl;
-    std::cout << "X: " << X << std::endl;
-    std::cout << "Y: " << Y << std::endl;
+    std::cout << "A: " << (int)A << std::endl;
+    std::cout << "X: " << (int)X << std::endl;
+    std::cout << "Y: " << (int)Y << std::endl;
     std::cout << "CF: " << CF << std::endl;
     std::cout << "ZF: " << ZF << std::endl;
     std::cout << "ID: " << ID << std::endl;
@@ -38,11 +38,9 @@ void CPU::Log() {
     std::cout << "BC: " << BC << std::endl;
     std::cout << "OF: " << OF << std::endl;
     std::cout << "NF: " << NF << std::endl;
-    std::cout << "SP: " << SP << std::endl;
-    std::cout << "PC: " << PC << std::endl;
+    std::cout << "SP: " << (int)SP << std::endl;
+    std::cout << "PC: " << (int)PC << std::endl;
     std::cout << "-----" << std::endl;
-    std::string s = "Hello";
-    std::cout << *(&s+2) << std::endl;
 };
 
 void CPU::Log(std::string s) {
