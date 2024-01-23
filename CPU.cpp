@@ -15,13 +15,13 @@ void Memory::init() {
 }
 
 void CPU::Reset(Memory mem) {
-    this->PC = 0xFFFC;
+    this->PC = mem.Read(0xFFFC);
 
     A,X,Y = (BYTE) 0;
     CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0;
 
     this->SP = (BYTE) 0;
-    SP--;
+    SP-=3;
     
     mem.init();
 }
