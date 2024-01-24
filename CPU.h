@@ -40,6 +40,66 @@ struct CPU {
     void Start(Memory mem);
     void FillMatrix();
 
+
+    // operations
+    void ADC(Memory mem);
+    void AND(Memory mem);
+    void ASL(Memory mem);
+    void BCC(Memory mem);
+    void BCS(Memory mem);
+    void BEQ(Memory mem);
+    void BIT(Memory mem);
+    void BMI(Memory mem);
+    void BNE(Memory mem);
+    void BPL(Memory mem);
+    void BRK(Memory mem);
+    void BVC(Memory mem);
+    void BVS(Memory mem);
+    void CLC(Memory mem);
+    void CLD(Memory mem);
+    void CLI(Memory mem);
+    void CLV(Memory mem);
+    void CMP(Memory mem);
+    void CPX(Memory mem);
+    void CPY(Memory mem);
+    void DEC(Memory mem);
+    void DEX(Memory mem);
+    void DEY(Memory mem);
+    void EOR(Memory mem);
+    void INC(Memory mem);
+    void INX(Memory mem);
+    void INY(Memory mem);
+    void JMP(Memory mem);
+    void JSR(Memory mem);
+    void LDA(Memory mem);
+    void LDX(Memory mem);
+    void LDY(Memory mem);
+    void LSR(Memory mem);
+    void NOP(Memory mem);
+    void ORA(Memory mem);
+    void PHA(Memory mem);
+    void PHP(Memory mem);
+    void PLA(Memory mem);
+    void PLP(Memory mem);
+    void ROL(Memory mem);
+    void ROR(Memory mem);
+    void RTI(Memory mem);
+    void RTS(Memory mem);
+    void SBC(Memory mem);
+    void SEC(Memory mem);
+    void SED(Memory mem);
+    void SEI(Memory mem);
+    void STA(Memory mem);
+    void STX(Memory mem);
+    void STY(Memory mem);
+    void TAX(Memory mem);
+    void TAY(Memory mem);
+    void TSX(Memory mem);
+    void TXA(Memory mem);
+    void TXS(Memory mem);
+    void TYA(Memory mem);
+    void WAI(Memory mem);
+
 };
 
 /*
