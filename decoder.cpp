@@ -83,5 +83,5 @@ void CPU::FillMatrix() {
 }
 
 void CPU::Decode(BYTE opcode) {
-    std::cout << Matrix[opcode] << std::endl;
+    std::cout << Matrix.at((int)opcode) << std::endl;
 }

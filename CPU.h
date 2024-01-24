@@ -28,7 +28,7 @@ struct CPU {
 
     int Ticks = 0;
 
-    std::map<BYTE, std::string> Matrix;
+    std::map<int, std::string> Matrix;
 
     void Tick(int n);
     void Reset(Memory mem);

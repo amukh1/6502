@@ -7,7 +7,7 @@
 #include "CPU.h"
 
 BYTE Memory::Read(WORD Address) {
-    return (BYTE) 0x00;
+    return (BYTE) 0x44;
 }
 
 void Memory::init() {
@@ -24,6 +24,7 @@ void CPU::Reset(Memory mem) {
     SP-=3;
     
     mem.init();
+    FillMatrix();
 }
 
 void CPU::Log() {
@@ -52,5 +53,4 @@ void CPU::Log(std::string s) {
 void CPU::Step(Memory mem) {
     Decode(mem.Read(PC));
     PC++;
-
 }
