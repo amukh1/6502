@@ -7,7 +7,15 @@
 #include "CPU.h"
 
 BYTE Memory::Read(WORD Address) {
-    return (BYTE) 0x44;
+    if(Address > 0xFFFF) {
+        std::cout << "Address out of range" << std::endl;
+        return (BYTE) 0;
+    }else if(Address == 0xFFFC) {
+        return (BYTE) 0x00;
+    }else {
+    std::cout << "Reading from address: " << (int) Address << std::endl;
+    return (BYTE) data[Address];
+    }
 }
 
 void Memory::init() {

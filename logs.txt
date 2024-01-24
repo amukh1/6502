@@ -12,6 +12,27 @@ BC: 0
 OF: 0
 NF: 0
 SP: 253
-PC: 68
+PC: 0
 -----
+Reading from address: 0
 NOP
+Reading from address: 1
+NOP
+Reading from address: 2
+NOP
+Reading from address: 3
+NOP
+Reading from address: 4
+NOP
+Reading from address: 5
+NOP
+Reading from address: 6
+NOP
+Reading from address: 7
+NOP
+Reading from address: 8
+NOP
+Reading from address: 9
+NOP
+Reading from address: 10
+BRK

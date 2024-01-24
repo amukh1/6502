@@ -14,6 +14,7 @@ using BYTE = unsigned char;
 struct Memory {
     BYTE Read(WORD Address);
     BIT Write(WORD ADDRESS);
+    char* data;
     void init();
 };
 
@@ -36,6 +37,7 @@ struct CPU {
     void Log(std::string s);
     void Decode(BYTE opcode);
     void Step(Memory mem);
+    void Start(Memory mem);
     void FillMatrix();
 
 };
