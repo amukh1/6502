@@ -35,7 +35,7 @@ struct CPU {
     void Reset(Memory mem);
     void Log();
     void Log(std::string s);
-    void Decode(BYTE opcode);
+    std::string Decode(BYTE opcode);
     void Step(Memory mem);
     void Start(Memory mem);
     void FillMatrix();

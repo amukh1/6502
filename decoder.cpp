@@ -13,6 +13,7 @@ void CPU::FillMatrix() {
    Matrix[0xEA] = "NOP";
 }
 
-void CPU::Decode(BYTE opcode) {
+std::string CPU::Decode(BYTE opcode) {
     std::cout << Matrix.at((int)opcode) << std::endl;
+    return Matrix.at((int)opcode);
 }

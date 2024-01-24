@@ -8,10 +8,11 @@
 
 #include "CPU.h"
 
-int main() {
+int main(int argc, char** argv) {
     CPU cpu;
     Memory memory;
-    std::ifstream infile("program.bin", std::ios::binary);
+    std::string filename = argv[1];
+    std::ifstream infile(filename, std::ios::binary);
     infile.seekg(0, std::ios::end);
     size_t size = infile.tellg();
     infile.seekg(0, std::ios::beg);
