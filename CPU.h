@@ -7,13 +7,13 @@
 #include <cmath>
 #include <map>
 
-using BIT = bool;
+using _BIT = bool;
 using WORD = unsigned short;
 using BYTE = unsigned char;
 
 struct Memory {
     BYTE Read(WORD Address);
-    BIT Write(WORD ADDRESS);
+    _BIT Write(WORD ADDRESS);
     char* data;
     void init();
 };
@@ -23,7 +23,7 @@ struct CPU {
     WORD PC = 0xFFFC;
     BYTE SP = (BYTE) 0;
     BYTE A, X, Y;
-    BIT CF, ZF, ID, DM, BC, OF, NF;
+    _BIT CF, ZF, ID, DM, BC, OF, NF;
     
     int Cycle = 0;
 

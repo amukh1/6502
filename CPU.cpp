@@ -59,6 +59,22 @@ void CPU::Log(std::string s) {
 };
 
 void CPU::Step(Memory mem) {
-    Decode(mem.Read(PC));
+    std::string op = Decode(mem.Read(PC));
+    if(op == "LDA") {
+        LDA(mem);
+    }
+    
     PC++;
+}
+
+void CPU::LDA(Memory mem) {
+    if(mem.Read(PC) == 0xA9) {
+        BYTE operand = mem.Read(PC+1);
+        A = operand;
+        PC++;
+    }else if(mem.Read(PC) == 0xA5) {
+        BYTE operand = mem.Read(mem.Read(PC+1));
+        A = operand;
+        PC++;
+    }else return;
 }

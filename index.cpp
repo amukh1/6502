@@ -25,21 +25,8 @@ int main(int argc, char** argv) {
     cpu.Log();
     for(int i = 0; i < 11; i++) {
         cpu.Step(memory);
-        // cpu.Log();
+        cpu.Log();
     }
-
-    // std::ofstream file("program.bin", std::ios::binary);
-
-    // char* data = (char*) malloc(11 * sizeof(char));
-    // for(int i = 0; i<10; i++) {
-    //     data[i] = 0xEA;
-    // }
-    // data[10] = 0x00;
-
-
-    // for (int i = 0; i < 11; i++) {
-    //     file.write(data+i, 1);
-    // }
-    // file.close();
+    
     return 0;
 }
