@@ -21,7 +21,6 @@ int main(int argc, char** argv) {
             // treat as hex, address
             // change last byte that was an opcode to take address instead of immd
             // first remove last opcode byte
-            outfile.seekp(lastOpcode, std::ios::beg);
             if(lines[lastOpcode] == "LDA") {
                 outfile.write("\xA5", 1);
             }else if(lines[lastOpcode] == "LDX") {
