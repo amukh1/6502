@@ -16,8 +16,8 @@ int main(int argc, char** argv) {
     infile.seekg(0, std::ios::end);
     size_t size = infile.tellg();
     infile.seekg(0, std::ios::beg);
-    memory.data = new char[size];
-    infile.read(memory.data, size);
+    memory.data = new char[(int)std::pow(2,16)];
+    infile.read(memory.data+0x8000, size);
     infile.close();
     freopen("logs.txt", "w", stdout);
     cpu.Reset(memory);
@@ -25,8 +25,8 @@ int main(int argc, char** argv) {
     cpu.Log();
     while(cpu._BRK == 0) {
         cpu.Step(memory);
+        cpu.Log();
     }
-    cpu.Log();
     
     return 0;
 }

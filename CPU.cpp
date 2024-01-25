@@ -12,7 +12,9 @@ BYTE Memory::Read(WORD Address) {
         return (BYTE) 0;
     }else if(Address == 0xFFFC) {
         return (BYTE) 0x00;
-    }else {
+    }else if(Address == 0xFFFD) {
+        return (BYTE) 0x80;
+    } else {
     return (BYTE) data[Address];
     }
 }
@@ -22,7 +24,7 @@ void Memory::init() {
 }
 
 void CPU::Reset(Memory mem) {
-    this->PC = mem.Read(0xFFFC);
+    this->PC = (mem.Read(0xFFFD)<<8) | mem.Read(0xFFFC);
 
     A,X,Y = (BYTE) 0;
     CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0;
@@ -95,13 +97,17 @@ void CPU::LDX(Memory mem) {
         X = operand;
         PC++;
     }else if(mem.Read(PC) == 0xA6) {
-        BYTE operand = mem.Read(mem.Read(PC+1));
+        BYTE operand = mem.Read((WORD)mem.Read(PC+1));
         X = operand;
         PC++;
     }else return;
 }
 
 void CPU::LDY(Memory mem) {
-    BYTE operand = mem.Read(++PC);
-    Y = operand;
+    if(mem.Read(PC) == 0xA0) {
+        BYTE operand = mem.Read(++PC);
+        Y = operand;
+    } else if(mem.Read(PC) == 0xA4) {
+
+    }
 }
