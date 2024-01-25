@@ -86,6 +86,12 @@ void CPU::Step(Memory mem) {
         LDX(mem);
     }else if(op == "LDY") {
         LDY(mem);
+    }else if(op == "STA") {
+        STA(mem);
+    }else if(op == "STX") {
+        STX(mem);
+    }else if(op == "STY") {
+        STY(mem);
     }
     
     PC++;
@@ -121,10 +127,13 @@ void CPU::LDX(Memory mem) {
 
 void CPU::LDY(Memory mem) {
     if(mem.Read(PC) == 0xA0) {
-        BYTE operand = mem.Read(++PC);
+        BYTE operand = mem.Read(PC+1);
         Y = operand;
+        PC++;
     } else if(mem.Read(PC) == 0xA4) {
-
+        BYTE operand = mem.Read((WORD)mem.Read(PC+1));
+        Y = operand;
+        PC++;
     }
 }
 

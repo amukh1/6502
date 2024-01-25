@@ -11,7 +11,7 @@
 int main(int argc, char** argv) {
     CPU cpu;
     Memory memory;
-    memory.init();
+    // memory.init();
     std::string filename = argv[1];
     std::ifstream infile(filename, std::ios::binary);
     infile.seekg(0, std::ios::end);
