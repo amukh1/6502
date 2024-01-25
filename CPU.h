@@ -23,7 +23,7 @@ struct CPU {
     WORD PC = 0xFFFC;
     BYTE SP = (BYTE) 0;
     BYTE A, X, Y;
-    _BIT CF, ZF, ID, DM, BC, OF, NF;
+    _BIT CF, ZF, ID, DM, BC, OF, NF, _BRK;
     
     int Cycle = 0;
 

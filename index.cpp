@@ -23,10 +23,10 @@ int main(int argc, char** argv) {
     cpu.Reset(memory);
     std::cout << "---------------------------------------" << std::endl;
     cpu.Log();
-    for(int i = 0; i < 11; i++) {
+    while(cpu._BRK == 0) {
         cpu.Step(memory);
-        cpu.Log();
     }
+    cpu.Log();
     
     return 0;
 }

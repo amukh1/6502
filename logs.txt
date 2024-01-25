@@ -11,170 +11,23 @@ DM: 0
 BC: 0
 OF: 0
 NF: 0
+BRK: 0
 SP: 253
 PC: 0
 -----
-Reading from address: 0
 LDA
-Reading from address: 0
-Reading from address: 1
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 2
------
-Reading from address: 2
+LDX
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 3
------
-Reading from address: 3
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 4
------
-Reading from address: 4
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 5
------
-Reading from address: 5
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 6
------
-Reading from address: 6
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 7
------
-Reading from address: 7
 NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 8
------
-Reading from address: 8
-NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 9
------
-Reading from address: 9
-NOP
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 10
------
-Reading from address: 10
 BRK
 ------------------
 Cycle: 0
 A: 1
-X: 0
+X: 2
 Y: 0
 CF: 0
 ZF: 0
@@ -183,23 +36,7 @@ DM: 0
 BC: 0
 OF: 0
 NF: 0
+BRK: 1
 SP: 253
 PC: 11
------
-Reading from address: 11
-BRK
-------------------
-Cycle: 0
-A: 1
-X: 0
-Y: 0
-CF: 0
-ZF: 0
-ID: 0
-DM: 0
-BC: 0
-OF: 0
-NF: 0
-SP: 253
-PC: 12
 -----

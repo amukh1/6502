@@ -13,7 +13,6 @@ BYTE Memory::Read(WORD Address) {
     }else if(Address == 0xFFFC) {
         return (BYTE) 0x00;
     }else {
-    std::cout << "Reading from address: " << (int) Address << std::endl;
     return (BYTE) data[Address];
     }
 }
@@ -48,6 +47,7 @@ void CPU::Log() {
     std::cout << "BC: " << BC << std::endl;
     std::cout << "OF: " << OF << std::endl;
     std::cout << "NF: " << NF << std::endl;
+    std::cout << "BRK: " << _BRK << std::endl;
     std::cout << "SP: " << (int)SP << std::endl;
     std::cout << "PC: " << (int)PC << std::endl;
     std::cout << "-----" << std::endl;
@@ -60,11 +60,19 @@ void CPU::Log(std::string s) {
 
 void CPU::Step(Memory mem) {
     std::string op = Decode(mem.Read(PC));
-    if(op == "LDA") {
+    if(op == "BRK") {
+        BRK(mem);
+    }else if(op == "LDA") {
         LDA(mem);
+    }else if(op == "LDX") {
+        LDX(mem);
     }
     
     PC++;
+}
+
+void CPU::BRK(Memory mem) {
+    _BRK = 1;
 }
 
 void CPU::LDA(Memory mem) {
@@ -75,6 +83,18 @@ void CPU::LDA(Memory mem) {
     }else if(mem.Read(PC) == 0xA5) {
         BYTE operand = mem.Read(mem.Read(PC+1));
         A = operand;
+        PC++;
+    }else return;
+}
+
+void CPU::LDX(Memory mem) {
+    if(mem.Read(PC) == 0xA2) {
+        BYTE operand = mem.Read(PC+1);
+        X = operand;
+        PC++;
+    }else if(mem.Read(PC) == 0xA6) {
+        BYTE operand = mem.Read(mem.Read(PC+1));
+        X = operand;
         PC++;
     }else return;
 }
