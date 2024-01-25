@@ -66,6 +66,8 @@ void CPU::Step(Memory mem) {
         LDA(mem);
     }else if(op == "LDX") {
         LDX(mem);
+    }else if(op == "LDY") {
+        LDY(mem);
     }
     
     PC++;
@@ -97,4 +99,9 @@ void CPU::LDX(Memory mem) {
         X = operand;
         PC++;
     }else return;
+}
+
+void CPU::LDY(Memory mem) {
+    BYTE operand = mem.Read(++PC);
+    Y = operand;
 }

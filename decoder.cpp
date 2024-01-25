@@ -17,6 +17,9 @@ void CPU::FillMatrix() {
 
    Matrix[0xA2] = "LDX";
    Matrix[0xA6] = "LDX";
+
+   Matrix[0xA0] = "LDY";
+   Matrix[0xA4] = "LDY";
 }
 
 std::string CPU::Decode(BYTE opcode) {
