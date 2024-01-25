@@ -13,7 +13,7 @@ using BYTE = unsigned char;
 
 struct Memory {
     BYTE Read(WORD Address);
-    _BIT Write(WORD ADDRESS);
+    void Write(WORD ADDRESS, BYTE Data);
     char* data;
     void init();
 };

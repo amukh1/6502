@@ -20,6 +20,15 @@ void CPU::FillMatrix() {
 
    Matrix[0xA0] = "LDY";
    Matrix[0xA4] = "LDY";
+
+   Matrix[0x8D] = "STA";
+   Matrix[0x85] = "STA";
+
+   Matrix[0x8E] = "STX";
+    Matrix[0x86] = "STX";
+
+    Matrix[0x84] = "STY";
+    Matrix[0x8C] = "STY";
 }
 
 std::string CPU::Decode(BYTE opcode) {

@@ -11,6 +11,7 @@
 int main(int argc, char** argv) {
     CPU cpu;
     Memory memory;
+    memory.init();
     std::string filename = argv[1];
     std::ifstream infile(filename, std::ios::binary);
     infile.seekg(0, std::ios::end);
@@ -27,6 +28,10 @@ int main(int argc, char** argv) {
         cpu.Step(memory);
         cpu.Log();
     }
-    
+
+    // dump memory into file memory.bin
+    std::ofstream outfile("memory.bin", std::ios::binary);
+    outfile.write(memory.data, (int)std::pow(2,16));
+    outfile.close();
     return 0;
 }

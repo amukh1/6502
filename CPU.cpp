@@ -19,7 +19,23 @@ BYTE Memory::Read(WORD Address) {
     }
 }
 
+void Memory::Write(WORD Address, BYTE Data) {
+    if(Address > 0xFFFF) {
+        std::cout << "Address out of range" << std::endl;
+        return;
+    }else if(Address == 0xFFFC) {
+        return;
+    }else if(Address == 0xFFFD) {
+        return;
+    } else {
+    data[Address] = Data;
+    }
+}
+
 void Memory::init() {
+    for(int i = 0; i < (int)std::pow(2,16); i++) {
+        // data[0x00] = 0x00;
+    }
     return;
 }
 
@@ -32,7 +48,7 @@ void CPU::Reset(Memory mem) {
     this->SP = (BYTE) 0;
     SP-=3;
     
-    mem.init();
+    // mem.init();
     FillMatrix();
 }
 
@@ -110,4 +126,34 @@ void CPU::LDY(Memory mem) {
     } else if(mem.Read(PC) == 0xA4) {
 
     }
+}
+
+void CPU::STA(Memory mem) {
+    if(mem.Read(PC) == 0x8D) {
+        mem.Write((WORD)mem.Read(PC+1), A);
+        PC++;
+    }else if(mem.Read(PC) == 0x85) {
+        mem.Write((WORD)mem.Read(PC+1), A);
+        PC++;
+    }else return;
+}
+
+void CPU::STX(Memory mem) {
+    if(mem.Read(PC) == 0x8E) {
+        mem.Write((WORD)mem.Read(PC+1), X);
+        PC++;
+    }else if(mem.Read(PC) == 0x86) {
+        mem.Write((WORD)mem.Read(PC+1), X);
+        PC++;
+    }else return;
+}
+
+void CPU::STY(Memory mem) {
+    if(mem.Read(PC) == 0x84) {
+        mem.Write((WORD)mem.Read(PC+1), Y);
+        PC++;
+    }else if(mem.Read(PC) == 0x8C) {
+        mem.Write((WORD)mem.Read(PC+1), Y);
+        PC++;
+    }else return;
 }

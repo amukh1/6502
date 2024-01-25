@@ -10,8 +10,12 @@ int main() {
     data[3] = 0x02;
     data[4] = 0xA0;
     data[5] = 0x03;
-    data[6] = 0xA5;
+    // data[6] = 0xA5;
+    // data[7] = 0x00;
+    data[6] = 0x8D;
     data[7] = 0x00;
+    data[8] = 0xA4;
+    data[9] = 0x00;
 
 
     for (int i = 0; i < 11; i++) {
