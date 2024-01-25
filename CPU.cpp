@@ -33,9 +33,6 @@ void Memory::Write(WORD Address, BYTE Data) {
 }
 
 void Memory::init() {
-    for(int i = 0; i < (int)std::pow(2,16); i++) {
-        // data[0x00] = 0x00;
-    }
     return;
 }
 
@@ -43,7 +40,7 @@ void CPU::Reset(Memory mem) {
     this->PC = (mem.Read(0xFFFD)<<8) | mem.Read(0xFFFC);
 
     A,X,Y = (BYTE) 0;
-    CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0;
+    CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0, _BRK = 0;
 
     this->SP = (BYTE) 0;
     SP-=3;
