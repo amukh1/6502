@@ -15,9 +15,10 @@ int main() {
     data[8] = 0xA4; // LDY
     data[9] = 0x00; // $0x0000
     data[10] = 0x8A;
+    data[11] = 0x48;
 
 
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 12; i++) {
         file.write(data+i, 1);
     }
     file.close();

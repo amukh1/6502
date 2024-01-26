@@ -101,9 +101,16 @@ void CPU::Step(Memory mem) {
         TXS(mem);
     }else if(op == "TYA") {
         TYA(mem);
+    }else if(op == "PHA") {
+        PHA(mem);
+    }else if(op == "PHP") {
+        PHP(mem);
+    }else if(op == "PLA") {
+        PLA(mem);
+    }else if(op == "PLP") {
+        PLP(mem);
     }
 
-    
     PC++;
 }
 
@@ -200,3 +207,24 @@ void CPU::TXS(Memory mem) {
 void CPU::TYA(Memory mem) {
     A = Y;
 }
+
+void CPU::PHA(Memory mem) {
+    mem.Write((WORD)SP, A);
+    SP--;
+}
+
+void CPU::PHP(Memory mem) {
+    mem.Write((WORD)SP, A);
+    SP--;
+}
+
+void CPU::PLA(Memory mem) {
+    A = mem.Read((WORD)SP);
+    SP++;
+}
+
+void CPU::PLP(Memory mem) {
+    A = mem.Read((WORD)SP);
+    SP++;
+}
+
