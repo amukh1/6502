@@ -14,6 +14,7 @@ int main() {
     data[7] = 0x00; // $0x0000
     data[8] = 0xA4; // LDY
     data[9] = 0x00; // $0x0000
+    data[10] = 0x8A;
 
 
     for (int i = 0; i < 11; i++) {

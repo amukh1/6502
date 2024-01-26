@@ -89,7 +89,20 @@ void CPU::Step(Memory mem) {
         STX(mem);
     }else if(op == "STY") {
         STY(mem);
+    }else if(op == "TAX") {
+        TAX(mem);
+    }else if(op == "TAY") {
+        TAY(mem);
+    }else if(op == "TSX") {
+        TSX(mem);
+    }else if(op == "TXA") {
+        TXA(mem);
+    }else if(op == "TXS") {
+        TXS(mem);
+    }else if(op == "TYA") {
+        TYA(mem);
     }
+
     
     PC++;
 }
@@ -162,4 +175,28 @@ void CPU::STY(Memory mem) {
         mem.Write((WORD)mem.Read(PC+1), Y);
         PC++;
     }else return;
+}
+
+void CPU::TAX(Memory mem) {
+    X = A;
+}
+
+void CPU::TAY(Memory mem) {
+    Y = A;
+}
+
+void CPU::TSX(Memory mem) {
+    X = SP;
+}
+
+void CPU::TXA(Memory mem) {
+    A = X;
+}
+
+void CPU::TXS(Memory mem) {
+    SP = X;
+}
+
+void CPU::TYA(Memory mem) {
+    A = Y;
 }
