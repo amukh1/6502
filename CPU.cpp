@@ -39,7 +39,10 @@ void Memory::init() {
 void CPU::Reset(Memory mem) {
     this->PC = (mem.Read(0xFFFD)<<8) | mem.Read(0xFFFC);
 
-    A,X,Y = (BYTE) 0;
+    A = 0;
+    X = 0;
+    Y = 0;
+    
     CF = 0, ZF = 0, ID = 0, DM = 0, BC = 0, OF = 0, NF = 0, _BRK = 0;
 
     this->SP = (BYTE) 0;

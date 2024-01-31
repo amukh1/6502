@@ -25,7 +25,7 @@ void CPU::FillMatrix() {
    Matrix[0x86] = "STX";
    Matrix[0x84] = "STY";
    Matrix[0x8C] = "STY"; // store y register in memory
-
+   
    Matrix[0xAA] = "TAX";
    Matrix[0xA8] = "TAY";
    Matrix[0xBA] = "TSX"; // transfer stack pointer to x register
@@ -37,6 +37,8 @@ void CPU::FillMatrix() {
    Matrix[0x08] = "PHP"; // push processor status on stack
    Matrix[0x68] = "PLA"; // pull accumulator from stack
    Matrix[0x28] = "PLP"; // pull processor status from stack
+
+
 
 }
 
