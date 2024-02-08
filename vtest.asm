@@ -1,0 +1,3 @@
+NOP
+LDA $100
+BRK

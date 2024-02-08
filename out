@@ -1,0 +1,10 @@
+Sections:
+section .text (attr=<acrx> align=1):
+       0: opts: dp=0x0000 a=8 x=8
+       0: data(1): ea 
+       1: data(3): ad 00 00 rabs(1,0-15,0xffff,0x0,$100 IMP REF ) 
+       4: data(1): 00 
+Symbols:
+$100 IMP REF 
+__VASM EXPR(0=0x0) INTERNAL 
+__UNIXFS EXPR(0=0x0) INTERNAL 
