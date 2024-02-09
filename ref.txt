@@ -2,3 +2,4 @@ https://www.qmtpro.com/~nes/misc/nestest.txt
 https://www.pagetable.com/?p=410
 https://pegvin.github.io/6502/index.html
 https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf
+vasm6502_std -Fbin -Felf -mid=PC386 test.asm -o out

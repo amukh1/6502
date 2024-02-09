@@ -16,6 +16,7 @@ int main() {
     data[9] = 0x00; // $0x0000
     data[10] = 0x8A;
     data[11] = 0x48;
+    data[12] = 0xea;
 
 
     for (int i = 0; i < 12; i++) {
