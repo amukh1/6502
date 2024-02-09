@@ -222,8 +222,9 @@ void CPU::PHP(Memory mem) {
 }
 
 void CPU::PLA(Memory mem) {
-    A = mem.Read((WORD)SP);
-    SP++;
+    A = mem.Read((WORD)(++SP));
+    // clear that value
+    mem.Write((WORD)SP, 0);
 }
 
 void CPU::PLP(Memory mem) {
