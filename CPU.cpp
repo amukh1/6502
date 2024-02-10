@@ -28,7 +28,7 @@ void Memory::Write(WORD Address, BYTE Data) {
     }else if(Address == 0xFFFD) {
         return;
     } else {
-    data[Address] = Data;
+        data[Address] = Data;
     }
 }
 

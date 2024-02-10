@@ -14,5 +14,5 @@ PHA
 LDA #4
 PLA
 PLA
-LDA (255-2)
+LDX "h"
 BRK
