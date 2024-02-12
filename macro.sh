@@ -1,3 +1,5 @@
-cc65 -O -t c64 test.c
-ca65 -t c64 test.s
-ld65 -t c64 -o test test.o c64.lib
+cc65 -O  test.c
+ca65  test.s
+ld65  -o test -C test.cfg test.o c64.lib
+# decompile test > test.decompile
+da65 test -o test2.s

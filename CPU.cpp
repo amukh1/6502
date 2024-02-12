@@ -41,8 +41,8 @@ void Memory::init() {
     return;
 }
 
-void CPU::Reset(Memory mem) {
-    this->PC = (mem.Read(0xFFFD)<<8) | mem.Read(0xFFFC);
+void CPU::Reset(std::unique_ptr<Memory>& mem) {
+    this->PC = (mem->Read(0xFFFD)<<8) | mem->Read(0xFFFC);
 
     A = 0;
     X = 0;
@@ -81,8 +81,8 @@ void CPU::Log(std::string s) {
     std::cout << s << std::endl;
 };
 
-void CPU::Step(Memory mem) {
-    std::string op = Decode(mem.Read(PC));
+void CPU::Step(std::unique_ptr<Memory>& mem) {
+    std::string op = Decode(mem->Read(PC));
     if(op == "BRK") {
         BRK(mem);
     }else if(op == "LDA") {
@@ -140,27 +140,24 @@ void CPU::Step(Memory mem) {
     PC++;
 }
 
-void CPU::BRK(Memory mem) {
+void CPU::BRK(std::unique_ptr<Memory>& mem) {
     BR = 1;
 }
 
-void CPU::LDA(Memory mem) {
-    if(mem.Read(PC) == 0xA9) {
-        BYTE operand = mem.Read(PC+1);
+void CPU::LDA(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0xA9) {
+        BYTE operand = mem->Read(PC+1);
         A = operand;
         PC++;
-    }else if(mem.Read(PC) == 0xA5) {
-        BYTE operand = mem.Read(mem.Read(PC+1));
+    }else if(mem->Read(PC) == 0xA5) {
+        BYTE operand = mem->Read(mem->Read(PC+1));
         A = operand;
-        std::cout << (int)mem.Read(PC+1) << std::endl;
-        std::cout << (int)operand << std::endl;
         PC++;
-    }else if(mem.Read(PC) == 0xAD) { // absolute
+    }else if(mem->Read(PC) == 0xAD) { // absolute
         // address is 1 WORD. So, we need to read 2 bytes
-        // WORD address = (mem.Read(PC+1)<<8) | mem.Read(PC+2);
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        std::cout << "address: " << address << std::endl;
-        BYTE operand = mem.Read(address);
+        // WORD address = (mem->Read(PC+1)<<8) | mem->Read(PC+2);
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read(address);
         A = operand;
         PC+=2;
     }
@@ -175,18 +172,18 @@ void CPU::LDA(Memory mem) {
     }
 }
 
-void CPU::LDX(Memory mem) {
-    if(mem.Read(PC) == 0xA2) {
-        BYTE operand = mem.Read(PC+1);
+void CPU::LDX(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0xA2) {
+        BYTE operand = mem->Read(PC+1);
         X = operand;
         PC++;
-    }else if(mem.Read(PC) == 0xA6) {
-        BYTE operand = mem.Read((WORD)mem.Read(PC+1));
+    }else if(mem->Read(PC) == 0xA6) {
+        BYTE operand = mem->Read((WORD)mem->Read(PC+1));
         X = operand;
         PC++;
-    } else if(mem.Read(PC) == 0xAE) { // absolute
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        BYTE operand = mem.Read((WORD)address);
+    } else if(mem->Read(PC) == 0xAE) { // absolute
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read((WORD)address);
         X = operand;
         PC++;
     }
@@ -201,18 +198,18 @@ void CPU::LDX(Memory mem) {
     }
 }
 
-void CPU::LDY(Memory mem) {
-    if(mem.Read(PC) == 0xA0) {
-        BYTE operand = mem.Read(PC+1);
+void CPU::LDY(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0xA0) {
+        BYTE operand = mem->Read(PC+1);
         Y = operand;
         PC++;
-    } else if(mem.Read(PC) == 0xA4) {
-        BYTE operand = mem.Read((WORD)mem.Read(PC+1));
+    } else if(mem->Read(PC) == 0xA4) {
+        BYTE operand = mem->Read((WORD)mem->Read(PC+1));
         Y = operand;
         PC++;
-    } else if(mem.Read(PC) == 0xAC) { // absolute
-        WORD address = (mem.Read(PC+1)<<8) | mem.Read(PC+2);
-        BYTE operand = mem.Read((WORD)address);
+    } else if(mem->Read(PC) == 0xAC) { // absolute
+        WORD address = (mem->Read(PC+1)<<8) | mem->Read(PC+2);
+        BYTE operand = mem->Read((WORD)address);
         Y = operand;
         PC++;
     }
@@ -227,44 +224,41 @@ void CPU::LDY(Memory mem) {
     }
 }
 
-void CPU::STA(Memory mem) {
-    if(mem.Read(PC) == 0x8D) {
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        std::cout << "address: " << address << std::endl;
-        mem.Write((WORD)address, A);
+void CPU::STA(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x8D) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        mem->Write((WORD)address, A);
         PC+=2;
-    }else if(mem.Read(PC) == 0x85) {
-        mem.Write((WORD)mem.Read(PC+1), A);
-        std::cout << "address: " << (int)mem.Read(PC+1) << std::endl;
-        std::cout << (int)mem.Read(mem.Read(PC+1)) << std::endl;
+    }else if(mem->Read(PC) == 0x85) {
+        mem->Write((WORD)mem->Read(PC+1), A);
         PC++;
     }
     // std::cout << "STA" << std::endl;
 }
 
-void CPU::STX(Memory mem) {
-    if(mem.Read(PC) == 0x8E) {
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        mem.Write((WORD)address, X);
+void CPU::STX(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x8E) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        mem->Write((WORD)address, X);
         PC+=2;
-    }else if(mem.Read(PC) == 0x86) {
-        mem.Write((WORD)mem.Read(PC+1), X);
+    }else if(mem->Read(PC) == 0x86) {
+        mem->Write((WORD)mem->Read(PC+1), X);
         PC++;
     }else return;
 }
 
-void CPU::STY(Memory mem) {
-    if(mem.Read(PC) == 0x84) {
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        mem.Write((WORD)address, Y);
+void CPU::STY(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x84) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        mem->Write((WORD)address, Y);
         PC+=2;
-    }else if(mem.Read(PC) == 0x8C) {
-        mem.Write((WORD)mem.Read(PC+1), Y);
+    }else if(mem->Read(PC) == 0x8C) {
+        mem->Write((WORD)mem->Read(PC+1), Y);
         PC++;
     }else return;
 }
 
-void CPU::TAX(Memory mem) {
+void CPU::TAX(std::unique_ptr<Memory>& mem) {
     X = A;
 
     if(X == 0) {
@@ -277,7 +271,7 @@ void CPU::TAX(Memory mem) {
     }
 }
 
-void CPU::TAY(Memory mem) {
+void CPU::TAY(std::unique_ptr<Memory>& mem) {
     Y = A;
 
     if(Y == 0) {
@@ -290,7 +284,7 @@ void CPU::TAY(Memory mem) {
     }
 }
 
-void CPU::TSX(Memory mem) {
+void CPU::TSX(std::unique_ptr<Memory>& mem) {
     X = SP;
 
     if(X == 0) {
@@ -303,7 +297,7 @@ void CPU::TSX(Memory mem) {
     }
 }
 
-void CPU::TXA(Memory mem) {
+void CPU::TXA(std::unique_ptr<Memory>& mem) {
     A = X;
 
     if(A == 0) {
@@ -316,11 +310,11 @@ void CPU::TXA(Memory mem) {
     }
 }
 
-void CPU::TXS(Memory mem) {
+void CPU::TXS(std::unique_ptr<Memory>& mem) {
     SP = X;
 }
 
-void CPU::TYA(Memory mem) {
+void CPU::TYA(std::unique_ptr<Memory>& mem) {
     A = Y;
 
     if(A == 0) {
@@ -333,23 +327,23 @@ void CPU::TYA(Memory mem) {
     }
 }
 
-void CPU::PHA(Memory mem) {
-    mem.Write((WORD)SP, A);
+void CPU::PHA(std::unique_ptr<Memory>& mem) {
+    mem->Write((WORD)SP, A);
     SP--;
 }
 
-void CPU::PHP(Memory mem) {
+void CPU::PHP(std::unique_ptr<Memory>& mem) {
     BYTE PS = 0;
     // fill processor status
     PS = (N << 7) | (V << 6) | (BR << 4) | (B << 3) | (D << 2) | (I << 1) | (Z << 0);
-    mem.Write((WORD)SP, PS);
+    mem->Write((WORD)SP, PS);
     SP--;
 }
 
-void CPU::PLA(Memory mem) {
-    A = mem.Read((WORD)(++SP));
+void CPU::PLA(std::unique_ptr<Memory>& mem) {
+    A = mem->Read((WORD)(++SP));
     // clear that value
-    mem.Write((WORD)SP, 0);
+    mem->Write((WORD)SP, 0);
 
     if(A == 0) {
         Z = 1;
@@ -361,9 +355,9 @@ void CPU::PLA(Memory mem) {
     }
 }
 
-void CPU::PLP(Memory mem) {
-    BYTE PS = mem.Read((WORD)(++SP));
-    mem.Write((WORD)SP, 0);
+void CPU::PLP(std::unique_ptr<Memory>& mem) {
+    BYTE PS = mem->Read((WORD)(++SP));
+    mem->Write((WORD)SP, 0);
     // fill processor status
     N = (PS >> 7) & 1;
     V = (PS >> 6) & 1;
@@ -375,11 +369,11 @@ void CPU::PLP(Memory mem) {
 }
 
 // ASL
-void CPU::ASL(Memory mem) {
-    if(mem.Read(PC) == 0x0E) { // ASL absolute
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        BYTE operand = mem.Read(address);
-        mem.Write(address, operand << 1);
+void CPU::ASL(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x0E) { // ASL absolute
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read(address);
+        mem->Write(address, operand << 1);
 
         C = operand >> 7;
         if((operand<<1) == 0) {
@@ -392,10 +386,10 @@ void CPU::ASL(Memory mem) {
         }
 
         PC+=2;
-    }else if(mem.Read(PC) == 0x06) { // ASL zero page
-        WORD address = (WORD)mem.Read(PC+1);
-        BYTE operand = mem.Read(address);
-        mem.Write(address, operand << 1);
+    }else if(mem->Read(PC) == 0x06) { // ASL zero page
+        WORD address = (WORD)mem->Read(PC+1);
+        BYTE operand = mem->Read(address);
+        mem->Write(address, operand << 1);
 
         C = operand >> 7;
         if((operand<<1) == 0) {
@@ -408,7 +402,7 @@ void CPU::ASL(Memory mem) {
         }
 
         PC++;
-    }else if(mem.Read(PC) == 0x0A) { // ASL accumulator
+    }else if(mem->Read(PC) == 0x0A) { // ASL accumulator
         C = A >> 7;
         A = A << 1;
 
@@ -423,11 +417,11 @@ void CPU::ASL(Memory mem) {
     }
 }
 
-void CPU::LSR(Memory mem) {
-    if(mem.Read(PC) == 0x4E) {
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        BYTE operand = mem.Read(address);
-        mem.Write(address, operand >> 1);
+void CPU::LSR(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x4E) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read(address);
+        mem->Write(address, operand >> 1);
 
         C = operand >> 7;
         if((operand<<1) == 0) {
@@ -440,10 +434,10 @@ void CPU::LSR(Memory mem) {
         }
 
         PC+=2;
-    }else if(mem.Read(PC) == 0x46) {
-        WORD address = (WORD)mem.Read(PC+1);
-        BYTE operand = mem.Read(address);
-        mem.Write(address, operand >> 1);
+    }else if(mem->Read(PC) == 0x46) {
+        WORD address = (WORD)mem->Read(PC+1);
+        BYTE operand = mem->Read(address);
+        mem->Write(address, operand >> 1);
 
         C = operand >> 7;
         if((operand<<1) == 0) {
@@ -456,7 +450,7 @@ void CPU::LSR(Memory mem) {
         }
 
         PC++;
-    }else if(mem.Read(PC) == 0x4A) {
+    }else if(mem->Read(PC) == 0x4A) {
         C = A & 0x01;
         A = A >> 1;
 
@@ -473,18 +467,18 @@ void CPU::LSR(Memory mem) {
 
 // do ROL AND ROR later
 
-void CPU::AND (Memory mem) {
-    if(mem.Read(PC) == 0x29) {
-        BYTE operand = mem.Read(PC+1);
+void CPU::AND (std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x29) {
+        BYTE operand = mem->Read(PC+1);
         A = A & operand;
         PC++;
-    }else if(mem.Read(PC) == 0x25) {
-        BYTE operand = mem.Read(mem.Read(PC+1));
+    }else if(mem->Read(PC) == 0x25) {
+        BYTE operand = mem->Read(mem->Read(PC+1));
         A = A & operand;
         PC++;
-    }else if(mem.Read(PC) == 0x2D) {
-        WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-        BYTE operand = mem.Read((WORD)address);
+    }else if(mem->Read(PC) == 0x2D) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read((WORD)address);
         A = A & operand;
         PC+=2;
     }
@@ -505,35 +499,35 @@ void CPU::AND (Memory mem) {
 
 // JMP, JSR, RTS, RTI
 
-void CPU::JMP(Memory mem) {
-    if(mem.Read(PC) == 0x4C) {
-        PC = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-    }else if(mem.Read(PC) == 0x6C) {
-        PC = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
+void CPU::JMP(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0x4C) {
+        PC = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+    }else if(mem->Read(PC) == 0x6C) {
+        PC = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
     }
 }
 
-void CPU::JSR(Memory mem) {
-    WORD address = (mem.Read(PC+2)<<8) | mem.Read(PC+1);
-    mem.Write((WORD)SP, (PC+2) >> 8);
+void CPU::JSR(std::unique_ptr<Memory>& mem) {
+    WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+    mem->Write((WORD)SP, (PC+2) >> 8);
     SP--;
-    mem.Write((WORD)SP, (PC+2) & 0xFF);
+    mem->Write((WORD)SP, (PC+2) & 0xFF);
     SP--;
     PC = address;
 }
 
-void CPU::RTS(Memory mem) {
-    PC = (mem.Read((WORD)SP+1)<<8) | mem.Read((WORD)SP);
+void CPU::RTS(std::unique_ptr<Memory>& mem) {
+    PC = (mem->Read((WORD)SP+1)<<8) | mem->Read((WORD)SP);
     // clear that value
-    mem.Write((WORD)SP, 0);
+    mem->Write((WORD)SP, 0);
     SP++;
     PC++;
 }
 
-void CPU::RTI(Memory mem) {
-    BYTE PS = mem.Read((WORD)SP);
+void CPU::RTI(std::unique_ptr<Memory>& mem) {
+    BYTE PS = mem->Read((WORD)SP);
     // clear that value
-    mem.Write((WORD)SP, 0);
+    mem->Write((WORD)SP, 0);
     SP++;
     N = (PS >> 7) & 1;
     V = (PS >> 6) & 1;
@@ -542,6 +536,6 @@ void CPU::RTI(Memory mem) {
     D = (PS >> 2) & 1;
     I = (PS >> 1) & 1;
     Z = (PS >> 0) & 1;
-    PC = (mem.Read((WORD)SP+1)<<8) | mem.Read((WORD)SP);
+    PC = (mem->Read((WORD)SP+1)<<8) | mem->Read((WORD)SP);
     SP++;
 }

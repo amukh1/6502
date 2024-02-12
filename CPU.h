@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include <map>
+#include <memory>
 
 using _BIT = bool;
 using WORD = unsigned short;
@@ -33,74 +34,75 @@ struct CPU {
     std::map<int, std::string> Matrix;
 
     void Tick(int n);
-    void Reset(Memory mem);
+    void Reset(std::unique_ptr<Memory>& mem);
     void Log();
     void Log(std::string s);
     std::string Decode(BYTE opcode);
-    void Step(Memory mem);
-    void Start(Memory mem);
+    void Step(std::unique_ptr<Memory>& mem);
+    void Start(std::unique_ptr<Memory>& mem);
     void FillMatrix();
+
+    std::unique_ptr<Memory> mem;
 
 
     // operations
-    void ADC(Memory mem);
-    void AND(Memory mem);
-    void ASL(Memory mem);
-    void BCC(Memory mem);
-    void BCS(Memory mem);
-    void BEQ(Memory mem);
-    void BIT(Memory mem);
-    void BMI(Memory mem);
-    void BNE(Memory mem);
-    void BPL(Memory mem);
-    void BRK(Memory mem);
-    void BVC(Memory mem);
-    void BVS(Memory mem);
-    void CLC(Memory mem);
-    void CLD(Memory mem);
-    void CLI(Memory mem);
-    void CLV(Memory mem);
-    void CMP(Memory mem);
-    void CPX(Memory mem);
-    void CPY(Memory mem);
-    void DEC(Memory mem);
-    void DEX(Memory mem);
-    void DEY(Memory mem);
-    void EOR(Memory mem);
-    void INC(Memory mem);
-    void INX(Memory mem);
-    void INY(Memory mem);
-    void JMP(Memory mem);
-    void JSR(Memory mem);
-    void LDA(Memory mem);
-    void LDX(Memory mem);
-    void LDY(Memory mem);
-    void LSR(Memory mem);
-    void NOP(Memory mem);
-    void ORA(Memory mem);
-    void PHA(Memory mem);
-    void PHP(Memory mem);
-    void PLA(Memory mem);
-    void PLP(Memory mem);
-    void ROL(Memory mem);
-    void ROR(Memory mem);
-    void RTI(Memory mem);
-    void RTS(Memory mem);
-    void SBC(Memory mem);
-    void SEC(Memory mem);
-    void SED(Memory mem);
-    void SEI(Memory mem);
-    void STA(Memory mem);
-    void STX(Memory mem);
-    void STY(Memory mem);
-    void TAX(Memory mem);
-    void TAY(Memory mem);
-    void TSX(Memory mem);
-    void TXA(Memory mem);
-    void TXS(Memory mem);
-    void TYA(Memory mem);
-    void WAI(Memory mem);
-
+    void ADC(std::unique_ptr<Memory>& mem);
+    void AND(std::unique_ptr<Memory>& mem);
+    void ASL(std::unique_ptr<Memory>& mem);
+    void BCC(std::unique_ptr<Memory>& mem);
+    void BCS(std::unique_ptr<Memory>& mem);
+    void BEQ(std::unique_ptr<Memory>& mem);
+    void BIT(std::unique_ptr<Memory>& mem);
+    void BMI(std::unique_ptr<Memory>& mem);
+    void BNE(std::unique_ptr<Memory>& mem);
+    void BPL(std::unique_ptr<Memory>& mem);
+    void BRK(std::unique_ptr<Memory>& mem);
+    void BVC(std::unique_ptr<Memory>& mem);
+    void BVS(std::unique_ptr<Memory>& mem);
+    void CLC(std::unique_ptr<Memory>& mem);
+    void CLD(std::unique_ptr<Memory>& mem);
+    void CLI(std::unique_ptr<Memory>& mem);
+    void CLV(std::unique_ptr<Memory>& mem);
+    void CMP(std::unique_ptr<Memory>& mem);
+    void CPX(std::unique_ptr<Memory>& mem);
+    void CPY(std::unique_ptr<Memory>& mem);
+    void DEC(std::unique_ptr<Memory>& mem);
+    void DEX(std::unique_ptr<Memory>& mem);
+    void DEY(std::unique_ptr<Memory>& mem);
+    void EOR(std::unique_ptr<Memory>& mem);
+    void INC(std::unique_ptr<Memory>& mem);
+    void INX(std::unique_ptr<Memory>& mem);
+    void INY(std::unique_ptr<Memory>& mem);
+    void JMP(std::unique_ptr<Memory>& mem);
+    void JSR(std::unique_ptr<Memory>& mem);
+    void LDA(std::unique_ptr<Memory>& mem);
+    void LDX(std::unique_ptr<Memory>& mem);
+    void LDY(std::unique_ptr<Memory>& mem);
+    void LSR(std::unique_ptr<Memory>& mem);
+    void NOP(std::unique_ptr<Memory>& mem);
+    void ORA(std::unique_ptr<Memory>& mem);
+    void PHA(std::unique_ptr<Memory>& mem);
+    void PHP(std::unique_ptr<Memory>& mem);
+    void PLA(std::unique_ptr<Memory>& mem);
+    void PLP(std::unique_ptr<Memory>& mem);
+    void ROL(std::unique_ptr<Memory>& mem);
+    void ROR(std::unique_ptr<Memory>& mem);
+    void RTI(std::unique_ptr<Memory>& mem);
+    void RTS(std::unique_ptr<Memory>& mem);
+    void SBC(std::unique_ptr<Memory>& mem);
+    void SEC(std::unique_ptr<Memory>& mem);
+    void SED(std::unique_ptr<Memory>& mem);
+    void SEI(std::unique_ptr<Memory>& mem);
+    void STA(std::unique_ptr<Memory>& mem);
+    void STX(std::unique_ptr<Memory>& mem);
+    void STY(std::unique_ptr<Memory>& mem);
+    void TAX(std::unique_ptr<Memory>& mem);
+    void TAY(std::unique_ptr<Memory>& mem);
+    void TSX(std::unique_ptr<Memory>& mem);
+    void TXA(std::unique_ptr<Memory>& mem);
+    void TXS(std::unique_ptr<Memory>& mem);
+    void TYA(std::unique_ptr<Memory>& mem);
+    void WAI(std::unique_ptr<Memory>& mem);
 };
 
 /*
