@@ -14,6 +14,7 @@ void CPU::FillMatrix() {
 
    Matrix[0xA9] = "LDA";
    Matrix[0xA5] = "LDA";
+    Matrix[0xAD] = "LDA";
    Matrix[0xA2] = "LDX";
    Matrix[0xA6] = "LDX";
    Matrix[0xA0] = "LDY";
@@ -37,6 +38,66 @@ void CPU::FillMatrix() {
    Matrix[0x08] = "PHP"; // push processor status on stack
    Matrix[0x68] = "PLA"; // pull accumulator from stack
    Matrix[0x28] = "PLP"; // pull processor status from stack
+
+   Matrix[0x0E] = "ASL";
+   Matrix[0x06] = "ASL";
+   Matrix[0x0A] = "ASL";
+
+    Matrix[0x4E] = "LSR";
+    Matrix[0x46] = "LSR";
+    Matrix[0x4A] = "LSR";
+
+   Matrix[0x2E] = "ROL";
+    Matrix[0x26] = "ROL";
+    Matrix[0x2A] = "ROL";
+
+    Matrix[0x6E] = "ROR";
+    Matrix[0x66] = "ROR";
+    Matrix[0x6A] = "ROR";
+
+    Matrix[0x29] = "AND";
+    Matrix[0x25] = "AND";
+    Matrix[0x2D] = "AND";
+
+    Matrix[0x49] = "EOR";
+    Matrix[0x45] = "EOR";
+    Matrix[0x4D] = "EOR";
+
+    Matrix[0x09] = "ORA";
+    Matrix[0x05] = "ORA";
+    Matrix[0x0D] = "ORA";
+
+    Matrix[0x49] = "CMP";
+    Matrix[0xC5] = "CMP";
+    Matrix[0xCD] = "CMP";
+
+    Matrix[0xE0] = "CPX";
+    Matrix[0xE4] = "CPX";
+    Matrix[0xEC] = "CPX";
+
+    Matrix[0xC0] = "CPY";
+    Matrix[0xC4] = "CPY";
+    Matrix[0xCC] = "CPY";
+
+    Matrix[0xC6] = "DEC";
+    Matrix[0xCE] = "DEC";
+    Matrix[0xCA] = "DEX";
+
+    Matrix[0x88] = "DEY";
+    Matrix[0xE6] = "INC";
+    Matrix[0xEE] = "INC";
+
+    Matrix[0xE8] = "INX";
+    Matrix[0xC8] = "INY";
+
+    // break jump jsr rti rts
+    Matrix[0x00] = "BRK";
+    Matrix[0x4C] = "JMP";
+    Matrix[0x6C] = "JMP";
+    Matrix[0x20] = "JSR";
+    Matrix[0x40] = "RTI";
+    Matrix[0x60] = "RTS";
+
 
 
 

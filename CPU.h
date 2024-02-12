@@ -14,7 +14,7 @@ using BYTE = unsigned char;
 struct Memory {
     BYTE Read(WORD Address);
     void Write(WORD ADDRESS, BYTE Data);
-    char* data;
+    std::vector<BYTE> data; // needs to hold 64KB of data
     void init();
 };
 
@@ -23,7 +23,8 @@ struct CPU {
     WORD PC = 0xFFFC;
     BYTE SP = (BYTE) 0;
     BYTE A, X, Y;
-    _BIT CF, ZF, ID, DM, BC, OF, NF, _BRK;
+    // _BIT CF, ZF, ID, DM, BC, OF, NF, _BRK;
+    _BIT N, V, BR, B, D, I, Z, C;
     
     int Cycle = 0;
 

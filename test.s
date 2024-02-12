@@ -11,13 +11,7 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.import		_printf
 	.export		_main
-
-.segment	"RODATA"
-
-L0003:
-	.byte	$48,$00
 
 ; ---------------------------------------------------------------
 ; int __near__ main (void)
@@ -29,11 +23,6 @@ L0003:
 
 .segment	"CODE"
 
-	lda     #<(L0003)
-	ldx     #>(L0003)
-	jsr     pushax
-	ldy     #$02
-	jsr     _printf
 	ldx     #$00
 	txa
 	rts
