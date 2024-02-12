@@ -152,6 +152,8 @@ void CPU::LDA(Memory mem) {
     }else if(mem.Read(PC) == 0xA5) {
         BYTE operand = mem.Read(mem.Read(PC+1));
         A = operand;
+        std::cout << (int)mem.Read(PC+1) << std::endl;
+        std::cout << (int)operand << std::endl;
         PC++;
     }else if(mem.Read(PC) == 0xAD) { // absolute
         // address is 1 WORD. So, we need to read 2 bytes
@@ -233,6 +235,8 @@ void CPU::STA(Memory mem) {
         PC+=2;
     }else if(mem.Read(PC) == 0x85) {
         mem.Write((WORD)mem.Read(PC+1), A);
+        std::cout << "address: " << (int)mem.Read(PC+1) << std::endl;
+        std::cout << (int)mem.Read(mem.Read(PC+1)) << std::endl;
         PC++;
     }
     // std::cout << "STA" << std::endl;
