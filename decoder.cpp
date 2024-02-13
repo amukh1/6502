@@ -104,6 +104,6 @@ void CPU::FillMatrix() {
 }
 
 std::string CPU::Decode(BYTE opcode) {
-    std::cout << Matrix.at((int)opcode) << std::endl;
+    // std::cout << Matrix.at((int)opcode) << std::endl;
     return Matrix.at((int)opcode);
 }

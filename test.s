@@ -24,7 +24,7 @@
 .segment	"CODE"
 
 	ldx     #$00
-	txa
+	lda     #$02
 	rts
 
 .endproc

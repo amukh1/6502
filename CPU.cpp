@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <cstdio>
+#include <fstream>
 
 #include "CPU.h"
 
@@ -26,9 +28,24 @@ void Memory::Write(WORD Address, BYTE Data) {
     if(Address > 0xFFFF) {
         std::cout << "Address out of range" << std::endl;
         return;
-    }else if(Address == 0xFFFC) {
-        return;
-    }else if(Address == 0xFFFD) {
+    } else if(Address == 0xFFFB) {
+        // std::cout << "SYSCALL" << std::endl;
+        if(Data == 0x00) {
+            return;
+        }else if(Data == 0x80) {
+            // printing the address from (FFFC,FFFD) to (0xFFFE,0XFFFF) to the console.
+            WORD start = (data[0xFFFC]<<8) | data[0xFFFD];
+            WORD end = (data[0xFFFE]<<8) | data[0xFFFF];
+
+            // std::cout << "Printing from " << start << " to " << end << std::endl;
+
+            // should be in ascii format
+            for(int i = start; i < end; i++) {
+                // std::cout << (char)data[i];
+                // std output prints to logs file, print out to console
+                std::printf("%c", data[i]);
+            }
+        }
         return;
     } else {
         // *(data + Address) = Data;
@@ -58,22 +75,24 @@ void CPU::Reset(std::unique_ptr<Memory>& mem) {
 }
 
 void CPU::Log() {
-    std::cout << "------------------" << std::endl;
-    std::cout << "Cycle: " << Cycle << std::endl;
-    std::cout << "A: " << (int)A << std::endl;
-    std::cout << "X: " << (int)X << std::endl;
-    std::cout << "Y: " << (int)Y << std::endl;
-    std::cout << "N: " << N << std::endl;
-    std::cout << "V: " << V << std::endl;
-    std::cout << "BRK: " << BR << std::endl;
-    std::cout << "B: " << B << std::endl;
-    std::cout << "D: " << D << std::endl;
-    std::cout << "I: " << I << std::endl;
-    std::cout << "Z: " << Z << std::endl;
-    std::cout << "C: " << C << std::endl;
-    std::cout << "SP: " << (int)SP << std::endl;
-    std::cout << "PC: " << (int)PC << std::endl;
-    std::cout << "-----" << std::endl;
+    std::ofstream outfile("logs.txt", std::ios::app);
+    outfile << "------------------" << std::endl;
+    outfile << "Cycle: " << Cycle << std::endl;
+    outfile << "A: " << (int)A << std::endl;
+    outfile << "X: " << (int)X << std::endl;
+    outfile << "Y: " << (int)Y << std::endl;
+    outfile << "N: " << N << std::endl;
+    outfile << "V: " << V << std::endl;
+    outfile << "BRK: " << BR << std::endl;
+    outfile << "B: " << B << std::endl;
+    outfile << "D: " << D << std::endl;
+    outfile << "I: " << I << std::endl;
+    outfile << "Z: " << Z << std::endl;
+    outfile << "C: " << C << std::endl;
+    outfile << "SP: " << (int)SP << std::endl;
+    outfile << "PC: " << (int)PC << std::endl;
+    outfile << "-----" << std::endl;
+    outfile.close();
 };
 
 void CPU::Log(std::string s) {
@@ -133,7 +152,7 @@ void CPU::Step(std::unique_ptr<Memory>& mem) {
     }
     
     else if(op == "NOP") {
-        std::cout << "NOP" << std::endl;
+        // std::cout << "NOP" << std::endl;
         PC++;
     }
 

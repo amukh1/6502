@@ -1,0 +1,38 @@
+start:
+
+; F
+LDA #70
+STA 0x00
+
+; R
+LDA #82
+STA 0x01
+
+; O
+LDA #79
+STA 0x02
+
+; G
+LDA #71
+STA 0x03
+
+; \n
+LDA #10
+STA 0x04
+
+; set syscall locations
+LDA #0x00 
+STA 0xFFFC
+LDA #0x00
+STA 0xFFFD
+
+LDA #0x00
+STA 0xFFFE
+LDA #0x05
+STA 0xFFFF
+
+; start syscall
+LDA #0x80
+STA 0xFFFB
+
+BRK

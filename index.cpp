@@ -29,19 +29,18 @@ int main(int argc, char** argv) {
     for(int i = 0; i < size; i++) {
         cpu.mem->data[i+0x8000] = buffer[i];
     }
-    freopen("logs.txt", "w", stdout);
     cpu.Reset(cpu.mem);
     // std::cout << cpu._BRK << std::endl;
-    std::cout << "---------------------------------------" << std::endl;
+    // std::cout << "---------------------------------------" << std::endl;
     cpu.Log();
     while(cpu.BR == 0) {
         cpu.Step(cpu.mem);
         cpu.Log();
     }
     // dump memory into file memory.bin
-    // std::ofstream outfile("memory.bin", std::ios::binary);
-    // outfile.write((char*)memory.data, (int)(65536 * sizeof(unsigned char)));
-    // outfile.close();
+    std::ofstream outfile("memory.bin", std::ios::binary);
+    outfile.write((char*)cpu.mem->data.data(), (int)(65536 * sizeof(unsigned char)));
+    outfile.close();
     // free(memory.data);
     return 0;
 }

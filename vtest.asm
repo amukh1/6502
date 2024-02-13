@@ -1,6 +1,0 @@
-start:
-LDA #12
-STA 0x01
-LDA #16
-LDA 0x01
-BRK
