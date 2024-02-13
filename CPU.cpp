@@ -140,6 +140,14 @@ void CPU::Step(std::unique_ptr<Memory>& mem) {
         ASL(mem);
     }else if(op == "LSR") {
         LSR(mem);
+    }else if(op == "JMP") {
+        JMP(mem);
+    }else if(op == "JSR") {
+        JSR(mem);
+    }else if(op == "RTS") {
+        RTS(mem);
+    }else if(op == "RTI") {
+        RTI(mem);
     }
     // else if(op == "ROL") {
     //     ROL(mem);
