@@ -1,9 +1,9 @@
 .org 0x8000
 start:
 JMP (main+1)
-.byte "FROG"
+.byte 0x00
 main:
-JMP (0x800E)
+.byte 0xea
 LDA #0x80
 STA 0xFFFC
 LDA #0x03

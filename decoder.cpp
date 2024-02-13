@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cmath>
 #include <map>
+#include <fstream>
 
 #include "CPU.h"
 
@@ -105,5 +106,8 @@ void CPU::FillMatrix() {
 
 std::string CPU::Decode(BYTE opcode) {
     // std::cout << Matrix.at((int)opcode) << std::endl;
+    std::ofstream outfile("logs.txt", std::ios::app);
+    outfile << Matrix.at((int)opcode) << std::endl;
+    outfile.close();
     return Matrix.at((int)opcode);
 }

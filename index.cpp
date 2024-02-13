@@ -32,6 +32,11 @@ int main(int argc, char** argv) {
     cpu.Reset(cpu.mem);
     // std::cout << cpu._BRK << std::endl;
     // std::cout << "---------------------------------------" << std::endl;
+    // clear logs.txt file:
+    std::ofstream ofs;
+    ofs.open("logs.txt", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    
     cpu.Log();
     while(cpu.BR == 0) {
         cpu.Step(cpu.mem);
