@@ -23,9 +23,9 @@
 
 .segment	"CODE"
 
-	ldx     #$00
-	lda     #$02
-	rts
+	lda     #$10
+	jsr     pusha0
+	jmp     incsp2
 
 .endproc
 

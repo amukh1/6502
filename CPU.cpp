@@ -167,7 +167,7 @@ void CPU::Step(std::unique_ptr<Memory>& mem) {
     
     else if(op == "NOP") {
         // std::cout << "NOP" << std::endl;
-        PC++;
+        // PC++;
     }
 
     PC++;
@@ -551,11 +551,14 @@ void CPU::JSR(std::unique_ptr<Memory>& mem) {
 }
 
 void CPU::RTS(std::unique_ptr<Memory>& mem) {
-    PC = (mem->Read((WORD)SP+1)<<8) | mem->Read((WORD)SP);
-    // clear that value
+    BYTE firstHalf = mem->Read((WORD)++SP);
     mem->Write((WORD)SP, 0);
-    SP++;
-    PC++;
+
+    BYTE secondHalf = mem->Read((WORD)++SP);
+    mem->Write((WORD)SP, 0);
+
+    PC = (secondHalf<<8) | firstHalf; 
+    // PC--;
 }
 
 void CPU::RTI(std::unique_ptr<Memory>& mem) {
