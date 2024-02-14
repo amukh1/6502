@@ -548,6 +548,7 @@ void CPU::JSR(std::unique_ptr<Memory>& mem) {
     mem->Write((WORD)SP, (PC+2) & 0xFF);
     SP--;
     PC = address;
+    PC--;
 }
 
 void CPU::RTS(std::unique_ptr<Memory>& mem) {
