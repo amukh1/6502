@@ -35,15 +35,21 @@ void Memory::Write(WORD Address, BYTE Data) {
         }else if(Data == 0x80) {
             // printing the address from (FFFC,FFFD) to (0xFFFE,0XFFFF) to the console.
             WORD start = (data[0xFFFC]<<8) | data[0xFFFD];
-            WORD end = (data[0xFFFE]<<8) | data[0xFFFF];
+            // WORD end = (data[0xFFFE]<<8) | data[0xFFFF];
+            bool end = false;
 
             // std::cout << "Printing from " << start << " to " << end << std::endl;
 
             // should be in ascii format
-            for(int i = start; i < end; i++) {
+            int i = start;
+            while(end == false) {
                 // std::cout << (char)data[i];
                 // std output prints to logs file, print out to console
                 std::printf("%c", data[i]);
+                i++;
+                if(data[i] == 0x00) {
+                    end = true;
+                }
             }
         }
         return;
@@ -532,6 +538,7 @@ void CPU::JMP(std::unique_ptr<Memory>& mem) {
     }else if(mem->Read(PC) == 0x6C) {
         PC = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
     }
+    PC--;
 }
 
 void CPU::JSR(std::unique_ptr<Memory>& mem) {

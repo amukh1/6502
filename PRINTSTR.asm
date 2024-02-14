@@ -1,18 +1,14 @@
 .org 0x8000
 start:
-JMP (main+1)
-.byte 0x00
+JMP main
+
+data:
+.byte "I LOVE FISH SO MUCH!",10,0
 main:
-.byte 0xea
 LDA #0x80
 STA 0xFFFC
-LDA #0x03
+LDA #((data & 0xFF))
 STA 0xFFFD
-LDA #0x80
-STA 0xFFFE
-LDA #0x0A
-STA 0xFFFF
-
 
 
 ; start syscall

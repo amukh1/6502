@@ -106,8 +106,15 @@ void CPU::FillMatrix() {
 
 std::string CPU::Decode(BYTE opcode) {
     // std::cout << Matrix.at((int)opcode) << std::endl;
+    try {
     std::ofstream outfile("logs.txt", std::ios::app);
     outfile << Matrix.at((int)opcode) << std::endl;
     outfile.close();
     return Matrix.at((int)opcode);
+    } catch (const std::out_of_range& e) {
+        std::ofstream outfile("logs.txt", std::ios::app);
+        outfile << "Unknown opcode: " << std::hex << (int)opcode << std::endl;
+        outfile.close();
+        return "Unknown opcode";
+    }
 }
