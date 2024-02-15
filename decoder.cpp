@@ -16,6 +16,11 @@ void CPU::FillMatrix() {
    Matrix[0xA9] = "LDA";
    Matrix[0xA5] = "LDA";
     Matrix[0xAD] = "LDA";
+    Matrix[0xB9] = "LDA";
+    Matrix[0xB5] = "LDA";
+    Matrix[0xBD] = "LDA";
+    Matrix[0xA1] = "LDA";
+    Matrix[0xB1] = "LDA";
    Matrix[0xA2] = "LDX";
    Matrix[0xA6] = "LDX";
    Matrix[0xA0] = "LDY";

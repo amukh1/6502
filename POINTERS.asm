@@ -1,0 +1,20 @@
+.org 0x8000
+start:
+JMP main
+
+main:
+LDA #1
+STA 0X00
+LDA #2
+STA 0X01
+LDA #3
+STA 0X02
+LDA #0
+STA 0x05
+
+LDY #0
+LDA #0
+LDA (0X05),Y
+LDY #1
+LDA (0X05),Y
+BRK

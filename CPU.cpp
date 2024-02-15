@@ -193,6 +193,32 @@ void CPU::LDA(std::unique_ptr<Memory>& mem) {
         BYTE operand = mem->Read(address);
         A = operand;
         PC+=2;
+    }else if(mem->Read(PC) == 0xBD) { // X-indexed absolute
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read(address + X);
+        A = operand;
+        PC+=2;
+    }else if(mem->Read(PC) == 0xB9) { // Y-indexed absolute
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read(address + Y);
+        A = operand;
+        PC+=2;
+    }else if(mem->Read(PC) == 0xB5) { // X-indexed zero page
+        WORD address = (WORD)mem->Read(PC+1);
+        BYTE operand = mem->Read(address + X);
+        A = operand;
+        PC++;
+    }else if(mem->Read(PC) == 0xA1) { // X-indexed indirect
+        WORD address = (WORD)mem->Read(PC+1);
+        BYTE operand = mem->Read(mem->Read(address + X));
+        A = operand;
+        PC++;
+    }else if(mem->Read(PC) == 0xB1) { // ZP- Y-indexed indirect
+        // WORD address = (WORD)mem->Read(PC+1);
+        WORD address = 0x00 << 8 | mem->Read(PC+1);
+        BYTE operand = mem->Read(mem->Read(address) + Y);
+        A = operand;
+        PC++;
     }
 
     if(A == 0) {
@@ -535,8 +561,10 @@ void CPU::AND (std::unique_ptr<Memory>& mem) {
 void CPU::JMP(std::unique_ptr<Memory>& mem) {
     if(mem->Read(PC) == 0x4C) {
         PC = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
-    }else if(mem->Read(PC) == 0x6C) {
-        PC = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+    }else if(mem->Read(PC) == 0x6C) { // INDIRECT ADDRESSING
+        WORD given_address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        WORD address = (mem->Read(given_address+1)<<8) | mem->Read(given_address);
+        PC = address;
     }
     PC--;
 }
