@@ -32,7 +32,7 @@ void Memory::Write(WORD Address, BYTE Data) {
         // std::cout << "SYSCALL" << std::endl;
         if(Data == 0x00) {
             return;
-        }else if(Data == 0x80) {
+        }else if(Data == 0x80 || Data == 0x81) {
             // printing the address from (FFFC,FFFD) to (0xFFFE,0XFFFF) to the console.
             WORD start = (data[0xFFFC]<<8) | data[0xFFFD];
             // WORD end = (data[0xFFFE]<<8) | data[0xFFFF];
@@ -45,10 +45,13 @@ void Memory::Write(WORD Address, BYTE Data) {
             while(end == false) {
                 // std::cout << (char)data[i];
                 // std output prints to logs file, print out to console
-                std::printf("%c", data[i]);
+                std::printf((Data == 0x80) ? "%c" : "%d", data[i]);
                 i++;
                 if(data[i] == 0x00) {
                     end = true;
+                    if(Data == 0x81) {
+                        std::cout << std::endl;
+                    }
                 }
             }
         }
@@ -604,4 +607,22 @@ void CPU::RTI(std::unique_ptr<Memory>& mem) {
     Z = (PS >> 0) & 1;
     PC = (mem->Read((WORD)SP+1)<<8) | mem->Read((WORD)SP);
     SP++;
+}
+
+void CPU::INY(std::unique_ptr<Memory>& mem) {
+    Y++;
+    if(Y == 0) {
+        Z = 1;
+    }else if(Y < 0) {
+        N = 1;
+    }else {
+        Z = 0;
+        N = 0;
+    }
+}
+
+void CPU::BNE(std::unique_ptr<Memory>& mem) {
+    if(Z == 0) {
+        PC = PC + (char)mem->Read(PC+1);
+    }
 }

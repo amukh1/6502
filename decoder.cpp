@@ -104,6 +104,14 @@ void CPU::FillMatrix() {
     Matrix[0x40] = "RTI";
     Matrix[0x60] = "RTS";
 
+    // branch instructions
+    Matrix[0x90] = "BCC";
+    Matrix[0xB0] = "BCS";
+    Matrix[0xF0] = "BEQ";
+    Matrix[0x30] = "BMI";
+    Matrix[0xD0] = "BNE";
+    Matrix[0x10] = "BPL";
+
 
 
 
