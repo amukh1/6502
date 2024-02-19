@@ -2,41 +2,40 @@
 start:
 JMP main
 
+.equ HELLO, data
+.equ FROSCH, data+8
+.equ ARR, data+17
+data:
+.byte "HELLO.",10,0
+.byte "FROSCH.",10,0
+.byte "ARRAY.",10,0
+
 main:
-LDA #1
-STA 0X00
-LDA #2
-STA 0X01
-LDA #3
-STA 0X02
-LDA #0
-STA 0x05
 
-LDY #0
-LDA #0
-
-LS:
-LDA (0X05),Y
-INY
-LDA (0X05),Y
-; SUBTRACT 5 FROM Y
-STA 0x69
-
-LDA #0x00
+LDA #0x80
 STA 0xFFFC
-LDA #0x69
+LDA #(HELLO & 0xFF)
 STA 0xFFFD
 
-LDA #0x81
+LDA #0x80
 STA 0xFFFB
-DEY
-DEY
-DEY
-DEY
-DEY
-BNE LS
 
+LDA #0x80
+STA 0xFFFC
+LDA #(FROSCH & 0xFF)
+STA 0xFFFD
 
+LDA #0x80
+STA 0xFFFB
 
+LDY #0
+
+loop:
+LDA (ARR & 0xFF),Y
+CPY #5
+BEQ end
+INY
+JMP loop
+end:
 
 BRK

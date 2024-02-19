@@ -626,3 +626,75 @@ void CPU::BNE(std::unique_ptr<Memory>& mem) {
         PC = PC + (char)mem->Read(PC+1);
     }
 }
+
+void CPU::BEQ(std::unique_ptr<Memory>& mem) {
+    if(Z == 1) {
+        PC = PC + (char)mem->Read(PC+1);
+    }
+}
+
+// Compares
+
+void CPU::CMP(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0xC9) {
+        BYTE operand = mem->Read(PC+1);
+        if(A == operand) {
+            Z = 1;
+        }else if(A < operand) {
+            N = 1;
+        }else {
+            Z = 0;
+            N = 0;
+        }
+        PC++;
+    }else if(mem->Read(PC) == 0xC5) {
+        BYTE operand = mem->Read(mem->Read(PC+1));
+        if(A == operand) {
+            Z = 1;
+        }else if(A < operand) {
+            N = 1;
+        }else {
+            Z = 0;
+            N = 0;
+        }
+        PC++;
+    }else if(mem->Read(PC) == 0xCD) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read((WORD)address);
+        if(A == operand) {
+            Z = 1;
+        }else if(A < operand) {
+            N = 1;
+        }else {
+            Z = 0;
+            N = 0;
+        }
+        PC+=2;
+    }
+}
+
+void CPU::SBC(std::unique_ptr<Memory>& mem) {
+    if(mem->Read(PC) == 0xE9) {
+        BYTE operand = mem->Read(PC+1);
+        A = A - operand;
+        PC++;
+    }else if(mem->Read(PC) == 0xE5) {
+        BYTE operand = mem->Read(mem->Read(PC+1));
+        A = A - operand;
+        PC++;
+    }else if(mem->Read(PC) == 0xED) {
+        WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
+        BYTE operand = mem->Read((WORD)address);
+        A = A - operand;
+        PC+=2;
+    }
+
+    if(A == 0) {
+        Z = 1;
+    }else if(A < 0) {
+        N = 1;
+    }else {
+        Z = 0;
+        N = 0;
+    }
+}

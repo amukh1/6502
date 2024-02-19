@@ -113,6 +113,27 @@ void CPU::FillMatrix() {
     Matrix[0x10] = "BPL";
 
 
+    // ADD AND SUB
+    Matrix[0x69] = "ADC";
+    Matrix[0x65] = "ADC";
+    Matrix[0x6D] = "ADC";
+    Matrix[0x79] = "ADC";
+    Matrix[0x75] = "ADC";
+    Matrix[0x7D] = "ADC";
+    Matrix[0x61] = "ADC";
+    Matrix[0x71] = "ADC";
+    
+    Matrix[0xE9] = "SBC";
+    Matrix[0xE5] = "SBC";
+    Matrix[0xED] = "SBC";
+    Matrix[0xF9] = "SBC";
+    Matrix[0xF5] = "SBC";
+    Matrix[0xFD] = "SBC";
+    Matrix[0xE1] = "SBC";
+    Matrix[0xF1] = "SBC";
+    
+    Matrix[0x38] = "SEC";
+    Matrix[0x02] = "SEC";
 
 
 }

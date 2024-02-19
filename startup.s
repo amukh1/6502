@@ -11,7 +11,7 @@ __STARTUP__:
     jsr _main
 
     ; Endless loop after main returns
-    jmp *
+    ; jmp *
 
     ; Interrupt vectors
     .word $0000 ; NMI

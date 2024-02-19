@@ -1,30 +1,51 @@
 ; da65 V2.18 - Ubuntu 2.18-1
-; Created:    2024-02-14 16:05:59
+; Created:    2024-02-15 18:11:00
 ; Input file: test
 ; Page:       1
 
 
         .setcpu "6502"
 
-L8000           := $8000
-L800E           := $800E
-L801F           := $801F
+L800C           := $800C
+L801A           := $801A
 L802F           := $802F
-        lda     #$10
-        jsr     L802F
-        jmp     L801F
-
+L8043           := $8043
+L8055           := $8055
         ldx     #$FF
         txs
-        jsr     L8000
-        jmp     L800E
-
+        jsr     L802F
         brk
         brk
-        php
+        brk
         .byte   $80
         brk
         brk
+        jsr     L8055
+        ldy     #$01
+        lda     ($02),y
+        tax
+        dey
+        lda     ($02),y
+        jmp     L8043
+
+        jsr     L8055
+        ldx     #$00
+        lda     #$07
+        jsr     L800C
+        ldy     #$01
+        lda     ($02),y
+        tax
+        dey
+        lda     ($02),y
+        jmp     L8043
+
+        ldx     #$00
+        lda     #$06
+        jsr     L801A
+        ldx     #$00
+        lda     #$10
+        rts
+
         ldy     #$01
         lda     ($02),y
         tax
