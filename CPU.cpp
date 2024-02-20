@@ -698,3 +698,13 @@ void CPU::SBC(std::unique_ptr<Memory>& mem) {
         N = 0;
     }
 }
+
+// SEI, CLI
+
+void CPU::SEI(std::unique_ptr<Memory>& mem) {
+    I = 1;
+}
+
+void CPU::CLI(std::unique_ptr<Memory>& mem) {
+    I = 0;
+}

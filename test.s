@@ -12,6 +12,7 @@
 	.macpack	longbranch
 	.forceimport	__STARTUP__
 	.export		_fish
+	.export		_printChar
 	.export		_frog
 	.export		_main
 
@@ -36,7 +37,26 @@
 .endproc
 
 ; ---------------------------------------------------------------
-; int __near__ frog (int)
+; void __near__ printChar (unsigned char)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_printChar: near
+
+.segment	"CODE"
+
+	jsr     pusha
+	lda     sp
+	ldx     sp+1
+	jsr     pushax
+	nop
+	jmp     incsp3
+
+.endproc
+
+; ---------------------------------------------------------------
+; int __near__ frog (void)
 ; ---------------------------------------------------------------
 
 .segment	"CODE"
@@ -45,16 +65,16 @@
 
 .segment	"CODE"
 
-	jsr     pushax
+	lda     #70
+	sta     $00
+	lda     #$00
+	sta     $FFFC
+	sta     $FFFD
+	lda     #$80
+	sta     $FFFB
 	ldx     #$00
-	lda     #$07
-	jsr     _fish
-	ldy     #$01
-	lda     (sp),y
-	tax
-	dey
-	lda     (sp),y
-	jmp     incsp2
+	txa
+	rts
 
 .endproc
 
@@ -68,12 +88,27 @@
 
 .segment	"CODE"
 
-	ldx     #$00
-	lda     #$06
-	jsr     _frog
+	lda     #$02
+	jsr     pusha
+	sta     $02
+	lda     #$61
+	sta     $0002
+	ldx     #$12
+	lda     #$34
+	sta     $0007
+	stx     $0007+1
+	lda     #$68
+	sta     $0009
+	lda     $09
+	sta     $FFFC
+	lda     $09+1
+	sta     $FFFD
+	lda     #$80
+	sta     $FFFB
+	nop
 	ldx     #$00
 	lda     #$10
-	rts
+	jmp     incsp1
 
 .endproc
 

@@ -135,6 +135,16 @@ void CPU::FillMatrix() {
     Matrix[0x38] = "SEC";
     Matrix[0x02] = "SEC";
 
+    Matrix[0x18] = "CLC";
+    Matrix[0xD8] = "CLD";
+    Matrix[0x58] = "CLI";
+    Matrix[0xB8] = "CLV";
+    Matrix[0x78] = "SEI";
+    // Matrix[0xEA] = "NOP";
+    Matrix[0x40] = "RTI";
+    Matrix[0x60] = "RTS";
+    // Matrix[0x00] = "BRK";
+
 
 }
 
