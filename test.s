@@ -88,26 +88,22 @@
 
 .segment	"CODE"
 
-	lda     #$02
+	lda     regbank+5
 	jsr     pusha
-	sta     $02
-	lda     #$61
-	sta     $0002
-	ldx     #$12
-	lda     #$34
-	sta     $0007
-	stx     $0007+1
-	lda     #$68
-	sta     $0009
-	lda     $09
-	sta     $FFFC
-	lda     $09+1
-	sta     $FFFD
-	lda     #$80
-	sta     $FFFB
-	nop
+	lda     #$19
+	sta     regbank+5
+	lda     #$25
+	sta     $04
+	pla
+	sta     $05
+	pla
+	sta     $06
 	ldx     #$00
 	lda     #$10
+	pha
+	lda     (sp,x)
+	sta     regbank+5
+	pla
 	jmp     incsp1
 
 .endproc

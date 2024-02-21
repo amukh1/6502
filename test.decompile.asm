@@ -1,5 +1,5 @@
 ; da65 V2.18 - Ubuntu 2.18-1
-; Created:    2024-02-20 16:01:28
+; Created:    2024-02-21 16:35:54
 ; Input file: test
 ; Page:       1
 
@@ -7,12 +7,12 @@
         .setcpu "6502"
 
 L803D           := $803D
-L806C           := $806C
-L8079           := $8079
+L805E           := $805E
+L806B           := $806B
+L807A           := $807A
 L8088           := $8088
-L8096           := $8096
-L809F           := $809F
-L80B5           := $80B5
+L8091           := $8091
+L80A7           := $80A7
         ldx     #$FF
         txs
         jsr     L803D
@@ -22,20 +22,20 @@ L80B5           := $80B5
         .byte   $80
         brk
         brk
-        jsr     L80B5
+        jsr     L80A7
         ldy     #$01
         lda     ($02),y
         tax
         dey
         lda     ($02),y
-        jmp     L8088
+        jmp     L807A
 
-        jsr     L809F
+        jsr     L8091
         lda     $02
         ldx     $03
-        jsr     L80B5
+        jsr     L80A7
         nop
-        jmp     L8096
+        jmp     L8088
 
         lda     #$46
         sta     $00
@@ -48,27 +48,23 @@ L80B5           := $80B5
         txa
         rts
 
-        lda     #$02
-        jsr     L809F
-        sta     $02
-        lda     #$61
-        sta     $02
-        ldx     #$12
-        lda     #$34
-        sta     $07
-        stx     $08
-        lda     #$68
-        sta     $09
-        lda     $09
-        sta     LFFFC
-        lda     $0A
-        sta     LFFFD
-        lda     #$80
-        sta     LFFFB
-        nop
+        lda     $1B
+        jsr     L8091
+        lda     #$19
+        sta     $1B
+        lda     #$25
+        sta     $04
+        pla
+        sta     $05
+        pla
+        sta     $06
         ldx     #$00
         lda     #$10
-        jmp     L8079
+        pha
+        lda     ($02,x)
+        sta     $1B
+        pla
+        jmp     L806B
 
         iny
         pha
@@ -102,7 +98,7 @@ LFFC8:  inc     $03
         rts
 
         ldy     #$03
-        jmp     L806C
+        jmp     L805E
 
         ldy     #$00
         lda     ($02),y
