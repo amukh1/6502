@@ -1,4 +1,5 @@
 // #include <stdio.h>
+#include <6502.h>
 
 // unsigned char cd = 0x02;
 
@@ -26,16 +27,20 @@ int frog() {
 }
 
 int main() {
-    register char x = 25;
+    char x = 25;
+    // *(char*)0x00 = 2;
+    *(char*)0x0a = x;
 
-    __asm__("LDA #$25");
-    __asm__("PHA");
-    __asm__("PLA");
-    __asm__("STA $04");
-    __asm__("PLA");
-    __asm__("STA $05");
-    __asm__("PLA");
-    __asm__("STA $06");
+    
+
+    // __asm__("LDA #$2");
+    // __asm__("PHA");
+    // __asm__("PLA");
+    // __asm__("STA $04");
+    // __asm__("PLA");
+    // __asm__("STA $05");
+    // __asm__("PLA");
+    // __asm__("STA $06");
 
     
     return 16;
