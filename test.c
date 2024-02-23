@@ -1,5 +1,6 @@
 // #include <stdio.h>
-#include <6502.h>
+// #include <6502.h>
+#include <stdlib.h>
 
 // unsigned char cd = 0x02;
 
@@ -26,10 +27,43 @@ int frog() {
     return 0;
 }
 
+char x;
+char* y;
+char c;
 int main() {
-    char x = 25;
+    // x = 12; // <-- not allocating
     // *(char*)0x00 = 2;
-    *(char*)0x0a = x;
+
+    x = 12;
+    c = 6;
+    *(char*)0x10 = x;
+
+    y = (char*)0x0200;
+    // *y = 1;
+
+    c = *y;
+    *(char*) 0x00 = c;
+
+    c = *(char*)0x0200;
+
+    *(char**) 0x11 = y;
+
+
+
+    // __asm__("LDA _x");
+    // __asm__("STA $05"); 
+
+    // char y = 7;
+    // *(char*)0x00 = y;
+
+
+    // *(char*)0x00 = 16;
+
+
+    // *(char*)0x00 = x; // <-- may be an error with expr parsing, but also x doesnt exist.
+
+
+
 
     
 

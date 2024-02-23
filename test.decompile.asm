@@ -1,5 +1,5 @@
 ; da65 V2.18 - Ubuntu 2.18-1
-; Created:    2024-02-22 21:08:36
+; Created:    2024-02-23 18:13:55
 ; Input file: test
 ; Page:       1
 
@@ -7,12 +7,11 @@
         .setcpu "6502"
 
 L803D           := $803D
-L8050           := $8050
-L805D           := $805D
-L806C           := $806C
-L807A           := $807A
-L8083           := $8083
-L8099           := $8099
+L807D           := $807D
+L8092           := $8092
+L80A0           := $80A0
+L80A9           := $80A9
+L80BF           := $80BF
         ldx     #$FF
         txs
         jsr     L803D
@@ -22,20 +21,20 @@ L8099           := $8099
         .byte   $80
         brk
         brk
-        jsr     L8099
+        jsr     L80BF
         ldy     #$01
         lda     ($02),y
         tax
         dey
         lda     ($02),y
-        jmp     L806C
+        jmp     L8092
 
-        jsr     L8083
+        jsr     L80A9
         lda     $02
         ldx     $03
-        jsr     L8099
+        jsr     L80BF
         nop
-        jmp     L807A
+        jmp     L80A0
 
         lda     #$46
         sta     $00
@@ -48,14 +47,33 @@ L8099           := $8099
         txa
         rts
 
-        lda     #$19
-        jsr     L8083
-        ldy     #$00
-        lda     ($02),y
+        lda     #$0C
+        sta     $0200
+        lda     #$06
+        sta     $0203
+        lda     $0200
+        sta     $10
+        ldx     #$02
+        lda     #$00
+        sta     $0201
+        stx     $0202
         sta     $0A
+        stx     $0B
+        tay
+        lda     ($0A),y
+        sta     $0203
+        sta     $00
+        lda     $0200
+        sta     $0203
+        lda     $0202
+        sta     $12
+        lda     $0201
+        sta     $11
+        lda     $0201
+        sta     $05
         ldx     #$00
         lda     #$10
-        jmp     L805D
+        rts
 
         iny
         pha
@@ -63,15 +81,10 @@ L8099           := $8099
         tya
         adc     $02
         sta     $02
-        bcc     LFFAC
+        bcc     LFFB3
         inc     $03
-LFFAC:  pla
+LFFB3:  pla
         rts
-
-        inc     $02
-        bne     LFFB4
-        inc     $03
-LFFB4:  rts
 
         ldy     #$01
         lda     ($02),y
@@ -89,7 +102,7 @@ LFFC8:  inc     $03
         rts
 
         ldy     #$03
-        jmp     L8050
+        jmp     L807D
 
         ldy     #$00
         lda     ($02),y

@@ -14,7 +14,19 @@
 	.export		_fish
 	.export		_printChar
 	.export		_frog
+	.export		_x
+	.export		_y
+	.export		_c
 	.export		_main
+
+.segment	"BSS"
+
+_x:
+	.res	1,$00
+_y:
+	.res	2,$00
+_c:
+	.res	1,$00
 
 ; ---------------------------------------------------------------
 ; int __near__ fish (int)
@@ -88,14 +100,33 @@
 
 .segment	"CODE"
 
-	lda     #$19
-	jsr     pusha
-	ldy     #$00
-	lda     (sp),y
-	sta     $000A
+	lda     #$0C
+	sta     _x
+	lda     #$06
+	sta     _c
+	lda     _x
+	sta     $0010
+	ldx     #$02
+	lda     #$00
+	sta     _y
+	stx     _y+1
+	sta     ptr1
+	stx     ptr1+1
+	tay
+	lda     (ptr1),y
+	sta     _c
+	sta     $0000
+	lda     $0200
+	sta     _c
+	lda     _y+1
+	sta     $0011+1
+	lda     _y
+	sta     $0011
+	lda     _y
+	sta     $0005
 	ldx     #$00
 	lda     #$10
-	jmp     incsp1
+	rts
 
 .endproc
 
