@@ -1,6 +1,7 @@
 // #include <stdio.h>
 // #include <6502.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 // unsigned char cd = 0x02;
 
@@ -30,6 +31,7 @@ int frog() {
 char x;
 char* y;
 char c;
+uint16_t z;
 int main() {
     // x = 12; // <-- not allocating
     // *(char*)0x00 = 2;
@@ -38,15 +40,15 @@ int main() {
     c = 6;
     *(char*)0x10 = x;
 
-    y = (char*)0x0200;
-    // *y = 1;
+    y = &x;
 
-    c = *y;
-    *(char*) 0x00 = c;
+    *(uint16_t*)0x14 = (uint16_t)y;
+    z = *(uint16_t*)((uint16_t)y);
+    c = *(char*)((uint16_t)y);
 
-    c = *(char*)0x0200;
-
-    *(char**) 0x11 = y;
+    
+    // x = 3;
+    // *(char*)0x14 = *y;
 
 
 

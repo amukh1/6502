@@ -17,6 +17,7 @@
 	.export		_x
 	.export		_y
 	.export		_c
+	.export		_z
 	.export		_main
 
 .segment	"BSS"
@@ -27,6 +28,8 @@ _y:
 	.res	2,$00
 _c:
 	.res	1,$00
+_z:
+	.res	2,$00
 
 ; ---------------------------------------------------------------
 ; int __near__ fish (int)
@@ -106,24 +109,28 @@ _c:
 	sta     _c
 	lda     _x
 	sta     $0010
-	ldx     #$02
-	lda     #$00
+	lda     #<(_x)
+	ldx     #>(_x)
 	sta     _y
 	stx     _y+1
+	sta     $0014
+	stx     $0014+1
+	lda     _y+1
+	sta     ptr1+1
+	lda     _y
 	sta     ptr1
-	stx     ptr1+1
-	tay
+	ldy     #$01
+	lda     (ptr1),y
+	sta     _z+1
+	dey
+	lda     (ptr1),y
+	sta     _z
+	lda     _y+1
+	sta     ptr1+1
+	lda     _y
+	sta     ptr1
 	lda     (ptr1),y
 	sta     _c
-	sta     $0000
-	lda     $0200
-	sta     _c
-	lda     _y+1
-	sta     $0011+1
-	lda     _y
-	sta     $0011
-	lda     _y
-	sta     $0005
 	ldx     #$00
 	lda     #$10
 	rts
