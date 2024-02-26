@@ -35,7 +35,6 @@ char* y;
 char c;
 uint16_t z;
 uint16_t addr_y;
-char* s;
 int main() {
     // x = 12; // <-- not allocating
     // *(char*)0x00 = 2;
@@ -45,18 +44,9 @@ int main() {
     *(char*)0x10 = x;
 
     y = &x;
+    *(char*)0x00 = 0x16;
+    *(char*)0x02 = *(char*)y;
 
-    *(uint16_t*)0x14 = (uint16_t)y;
-    z = *(uint16_t*)((uint16_t)0x0200);
-    // z = *(uint16_t*)((uint16_t)y);
-    addr_y = (uint16_t)y;
-    *(uint16_t*)0x14 = addr_y;
-    z = **(uint16_t**)0x14;
-    __A__ = 0x02;
-    __asm__("LDA #$12");
-    __asm__("LDX #$34");
-    // s = "hello";
-    z = __AX__;
     // *(char*)0x00 = __A__;
     // __asm__("STA $01");
 

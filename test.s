@@ -19,7 +19,6 @@
 	.export		_c
 	.export		_z
 	.export		_addr_y
-	.export		_s
 	.export		_main
 
 .segment	"BSS"
@@ -33,8 +32,6 @@ _c:
 _z:
 	.res	2,$00
 _addr_y:
-	.res	2,$00
-_s:
 	.res	2,$00
 
 ; ---------------------------------------------------------------
@@ -115,34 +112,19 @@ _s:
 	sta     _c
 	lda     _x
 	sta     $0010
+	lda     #>(_x)
+	sta     _y+1
 	lda     #<(_x)
-	ldx     #>(_x)
 	sta     _y
-	stx     _y+1
-	sta     $0014
-	stx     $0014+1
-	lda     $0200+1
-	sta     _z+1
-	lda     $0200
-	sta     _z
+	lda     #$16
+	sta     $0000
+	lda     _y+1
+	sta     ptr1+1
 	lda     _y
-	ldx     _y+1
-	sta     _addr_y
-	stx     _addr_y+1
-	sta     $0014
-	stx     $0014+1
 	sta     ptr1
-	stx     ptr1+1
-	ldy     #$01
+	ldy     #$00
 	lda     (ptr1),y
-	sta     _z+1
-	dey
-	lda     (ptr1),y
-	sta     _z
-	lda     #$34
-	sta     _z+1
-	lda     #$12
-	sta     _z
+	sta     $0002
 	ldx     #$00
 	lda     #$10
 	rts

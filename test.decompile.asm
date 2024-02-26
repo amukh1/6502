@@ -1,5 +1,5 @@
 ; da65 V2.18 - Ubuntu 2.18-1
-; Created:    2024-02-25 23:30:41
+; Created:    2024-02-26 21:37:25
 ; Input file: test
 ; Page:       1
 
@@ -7,11 +7,11 @@
         .setcpu "6502"
 
 L803D           := $803D
-L8097           := $8097
-L80AC           := $80AC
-L80BA           := $80BA
-L80C3           := $80C3
-L80D9           := $80D9
+L8070           := $8070
+L8085           := $8085
+L8093           := $8093
+L809C           := $809C
+L80B2           := $80B2
         ldx     #$FF
         txs
         jsr     L803D
@@ -21,20 +21,20 @@ L80D9           := $80D9
         .byte   $80
         brk
         brk
-        jsr     L80D9
+        jsr     L80B2
         ldy     #$01
         lda     ($02),y
         tax
         dey
         lda     ($02),y
-        jmp     L80AC
+        jmp     L8085
 
-        jsr     L80C3
+        jsr     L809C
         lda     $02
         ldx     $03
-        jsr     L80D9
+        jsr     L80B2
         nop
-        jmp     L80BA
+        jmp     L8093
 
         lda     #$46
         sta     $00
@@ -53,34 +53,19 @@ L80D9           := $80D9
         sta     $0203
         lda     $0200
         sta     $10
+        lda     #$02
+        sta     $0202
         lda     #$00
-        ldx     #$02
         sta     $0201
-        stx     $0202
-        sta     $14
-        stx     $15
+        lda     #$16
+        sta     $00
+        lda     $0202
+        sta     $0B
         lda     $0201
-        sta     $0205
-        lda     $0200
-        sta     $0204
-        lda     $0201
-        ldx     $0202
-        sta     $0206
-        stx     $0207
-        sta     $14
-        stx     $15
         sta     $0A
-        stx     $0B
-        ldy     #$01
+        ldy     #$00
         lda     ($0A),y
-        sta     $0205
-        dey
-        lda     ($0A),y
-        sta     $0204
-        lda     #$34
-        sta     $0205
-        lda     #$12
-        sta     $0204
+        sta     $02
         ldx     #$00
         lda     #$10
         rts
@@ -112,7 +97,7 @@ LFFC8:  inc     $03
         rts
 
         ldy     #$03
-        jmp     L8097
+        jmp     L8070
 
         ldy     #$00
         lda     ($02),y
