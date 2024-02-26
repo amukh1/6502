@@ -18,7 +18,14 @@
 	.export		_y
 	.export		_c
 	.export		_z
+	.export		_addr_y
+	.export		_s
 	.export		_main
+
+.segment	"RODATA"
+
+L0037:
+	.byte	$68,$65,$6C,$6C,$6F,$00
 
 .segment	"BSS"
 
@@ -29,6 +36,10 @@ _y:
 _c:
 	.res	1,$00
 _z:
+	.res	2,$00
+_addr_y:
+	.res	2,$00
+_s:
 	.res	2,$00
 
 ; ---------------------------------------------------------------
@@ -103,6 +114,8 @@ _z:
 
 .segment	"CODE"
 
+	lda     #$04
+	jsr     pusha
 	lda     #$0C
 	sta     _x
 	lda     #$06
@@ -115,25 +128,35 @@ _z:
 	stx     _y+1
 	sta     $0014
 	stx     $0014+1
-	lda     _y+1
-	sta     ptr1+1
+	lda     $0200+1
+	sta     _z+1
+	lda     $0200
+	sta     _z
 	lda     _y
+	ldx     _y+1
+	sta     _addr_y
+	stx     _addr_y+1
+	sta     $0014
+	stx     $0014+1
 	sta     ptr1
+	stx     ptr1+1
 	ldy     #$01
 	lda     (ptr1),y
 	sta     _z+1
 	dey
 	lda     (ptr1),y
 	sta     _z
-	lda     _y+1
-	sta     ptr1+1
-	lda     _y
-	sta     ptr1
-	lda     (ptr1),y
-	sta     _c
+	lda     _c
+	sta     $00
+	lda     (sp),y
+	sta     $0005
+	lda     #>(L0037)
+	sta     _s+1
+	lda     #<(L0037)
+	sta     _s
 	ldx     #$00
 	lda     #$10
-	rts
+	jmp     incsp1
 
 .endproc
 

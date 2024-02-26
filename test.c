@@ -2,6 +2,8 @@
 // #include <6502.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <6502.h>
+
 
 // unsigned char cd = 0x02;
 
@@ -32,6 +34,8 @@ char x;
 char* y;
 char c;
 uint16_t z;
+uint16_t addr_y;
+char* s;
 int main() {
     // x = 12; // <-- not allocating
     // *(char*)0x00 = 2;
@@ -43,8 +47,17 @@ int main() {
     y = &x;
 
     *(uint16_t*)0x14 = (uint16_t)y;
-    z = *(uint16_t*)((uint16_t)y);
-    c = *(char*)((uint16_t)y);
+    z = *(uint16_t*)((uint16_t)0x0200);
+    // z = *(uint16_t*)((uint16_t)y);
+    addr_y = (uint16_t)y;
+    *(uint16_t*)0x14 = addr_y;
+    z = **(uint16_t**)0x14;
+    __A__ = 0x02;
+    __asm__("LDA _c");
+    __asm__("STA $00");
+    s = "hello";
+    // *(char*)0x00 = __A__;
+    // __asm__("STA $01");
 
     
     // x = 3;
