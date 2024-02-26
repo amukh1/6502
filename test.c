@@ -53,9 +53,10 @@ int main() {
     *(uint16_t*)0x14 = addr_y;
     z = **(uint16_t**)0x14;
     __A__ = 0x02;
-    __asm__("LDA _c");
-    __asm__("STA $00");
-    s = "hello";
+    __asm__("LDA #$12");
+    __asm__("LDX #$34");
+    // s = "hello";
+    z = __AX__;
     // *(char*)0x00 = __A__;
     // __asm__("STA $01");
 

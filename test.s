@@ -22,11 +22,6 @@
 	.export		_s
 	.export		_main
 
-.segment	"RODATA"
-
-L0037:
-	.byte	$68,$65,$6C,$6C,$6F,$00
-
 .segment	"BSS"
 
 _x:
@@ -114,8 +109,6 @@ _s:
 
 .segment	"CODE"
 
-	lda     #$04
-	jsr     pusha
 	lda     #$0C
 	sta     _x
 	lda     #$06
@@ -146,17 +139,13 @@ _s:
 	dey
 	lda     (ptr1),y
 	sta     _z
-	lda     _c
-	sta     $00
-	lda     (sp),y
-	sta     $0005
-	lda     #>(L0037)
-	sta     _s+1
-	lda     #<(L0037)
-	sta     _s
+	lda     #$34
+	sta     _z+1
+	lda     #$12
+	sta     _z
 	ldx     #$00
 	lda     #$10
-	jmp     incsp1
+	rts
 
 .endproc
 
