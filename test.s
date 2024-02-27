@@ -11,6 +11,7 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
+	.import		_malloc
 	.export		_fish
 	.export		_printChar
 	.export		_frog
@@ -118,8 +119,9 @@ _addr_y:
 	sta     _y
 	lda     #$16
 	sta     $0000
-	lda     #$02
-	sta     $0002
+	ldx     #$00
+	lda     #$08
+	jsr     _malloc
 	ldx     #$00
 	lda     #$10
 	rts

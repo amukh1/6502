@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/include/cc65"
+                "/usr/share/cc65/include/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

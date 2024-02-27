@@ -2,7 +2,7 @@
 // #include <6502.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <6502.h>
+#include "./include/6502.h"
 
 #pragma bss-name(push, "BSS")
 
@@ -47,7 +47,11 @@ int main() {
 
     y = &x;
     *(char*)0x00 = 0x16;
-    *(char*)0x02 = sizeof(y);
+
+    // __asm__("LDY %v", y+1);  // Load high byte of address into Y
+    // __asm__("LDA (%v),Y", y);  // Load byte at address into A
+    // __asm__("STA $02");  // Store A at address
+    
     
 
 
