@@ -118,12 +118,7 @@ _addr_y:
 	sta     _y
 	lda     #$16
 	sta     $0000
-	lda     _y+1
-	sta     ptr1+1
-	lda     _y
-	sta     ptr1
-	ldy     #$00
-	lda     (ptr1),y
+	lda     #$02
 	sta     $0002
 	ldx     #$00
 	lda     #$10

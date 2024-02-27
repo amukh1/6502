@@ -33,7 +33,7 @@ int frog() {
 }
 
 char x;
-char __far__* y;
+char* y;
 char c;
 uint16_t z;
 uint16_t addr_y;
@@ -47,7 +47,9 @@ int main() {
 
     y = &x;
     *(char*)0x00 = 0x16;
-    *(char*)0x02 = *(char*)y;
+    *(char*)0x02 = sizeof(y);
+    
+
 
     // *(char*)0x00 = __A__;
     // __asm__("STA $01");

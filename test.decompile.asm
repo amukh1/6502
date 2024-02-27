@@ -1,5 +1,5 @@
 ; da65 V2.18 - Ubuntu 2.18-1
-; Created:    2024-02-26 16:51:46
+; Created:    2024-02-27 14:08:17
 ; Input file: test
 ; Page:       1
 
@@ -7,11 +7,11 @@
         .setcpu "6502"
 
 L803D           := $803D
-L8070           := $8070
-L8085           := $8085
-L8093           := $8093
-L809C           := $809C
-L80B2           := $80B2
+L8064           := $8064
+L8079           := $8079
+L8087           := $8087
+L8090           := $8090
+L80A6           := $80A6
         ldx     #$FF
         txs
         jsr     L803D
@@ -21,20 +21,20 @@ L80B2           := $80B2
         .byte   $80
         brk
         brk
-        jsr     L80B2
+        jsr     L80A6
         ldy     #$01
         lda     ($02),y
         tax
         dey
         lda     ($02),y
-        jmp     L8085
+        jmp     L8079
 
-        jsr     L809C
+        jsr     L8090
         lda     $02
         ldx     $03
-        jsr     L80B2
+        jsr     L80A6
         nop
-        jmp     L8093
+        jmp     L8087
 
         lda     #$46
         sta     $00
@@ -59,12 +59,7 @@ L80B2           := $80B2
         sta     $0201
         lda     #$16
         sta     $00
-        lda     $0202
-        sta     $0B
-        lda     $0201
-        sta     $0A
-        ldy     #$00
-        lda     ($0A),y
+        lda     #$02
         sta     $02
         ldx     #$00
         lda     #$10
@@ -97,7 +92,7 @@ LFFC8:  inc     $03
         rts
 
         ldy     #$03
-        jmp     L8070
+        jmp     L8064
 
         ldy     #$00
         lda     ($02),y
