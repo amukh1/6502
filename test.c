@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <6502.h>
 
+#pragma bss-name(push, "BSS")
+
 
 // unsigned char cd = 0x02;
 
@@ -31,7 +33,7 @@ int frog() {
 }
 
 char x;
-char* y;
+char __far__* y;
 char c;
 uint16_t z;
 uint16_t addr_y;

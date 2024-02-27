@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/local/include/cc65"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
