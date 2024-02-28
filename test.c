@@ -35,11 +35,9 @@ int frog() {
 char x;
 char c;
 char* y;
+char* s;
 int main() {
-    int z = 1;
-    __asm__("NOP");
-    __asm__("PLA");
-    __asm__("STA $04");
+    x = 4;
 
     // x = 12;
     // c = 6;

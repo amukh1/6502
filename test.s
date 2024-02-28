@@ -17,6 +17,7 @@
 	.export		_x
 	.export		_c
 	.export		_y
+	.export		_s
 	.export		_main
 
 .segment	"BSS"
@@ -26,6 +27,8 @@ _x:
 _c:
 	.res	1,$00
 _y:
+	.res	2,$00
+_s:
 	.res	2,$00
 
 ; ---------------------------------------------------------------
@@ -100,13 +103,11 @@ _y:
 
 .segment	"CODE"
 
-	lda     #$01
-	jsr     pusha0
-	nop
-	pla
-	sta     $04
+	lda     #$04
+	sta     _x
+	ldx     #$00
 	lda     #$10
-	jmp     incsp2
+	rts
 
 .endproc
 
