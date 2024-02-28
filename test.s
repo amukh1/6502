@@ -103,8 +103,10 @@ _s:
 
 .segment	"CODE"
 
-	lda     #$04
+	lda     #$0C
 	sta     _x
+	lda     #$16
+	sta     _c
 	ldx     #$00
 	lda     #$10
 	rts

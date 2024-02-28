@@ -37,7 +37,8 @@ char c;
 char* y;
 char* s;
 int main() {
-    x = 4;
+    x = 0x0c;
+    c = 0x16;
 
     // x = 12;
     // c = 6;
