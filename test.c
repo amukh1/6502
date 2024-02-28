@@ -36,11 +36,16 @@ char x;
 char c;
 char* y;
 int main() {
-    x = 12;
-    c = 6;
-    y = &c;
-    *(char*)0x03 = *y;
+    int z = 1;
+    __asm__("NOP");
+    __asm__("PLA");
+    __asm__("STA $04");
 
+    // x = 12;
+    // c = 6;
+    // y = &c;
+    // *(char*)0x03 = *y;
     
+
     return 16;
 }

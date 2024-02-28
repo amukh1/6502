@@ -100,22 +100,13 @@ _y:
 
 .segment	"CODE"
 
-	lda     #$0C
-	sta     _x
-	lda     #$06
-	sta     _c
-	lda     #<(_c)
-	ldx     #>(_c)
-	sta     _y
-	stx     _y+1
-	sta     ptr1
-	stx     ptr1+1
-	ldy     #$00
-	lda     (ptr1),y
-	sta     $0003
-	ldx     #$00
+	lda     #$01
+	jsr     pusha0
+	nop
+	pla
+	sta     $04
 	lda     #$10
-	rts
+	jmp     incsp2
 
 .endproc
 
