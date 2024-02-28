@@ -33,62 +33,13 @@ int frog() {
 }
 
 char x;
-char* y;
 char c;
-uint16_t z;
-uint16_t addr_y;
+char* y;
 int main() {
-    // x = 12; // <-- not allocating
-    // *(char*)0x00 = 2;
-
     x = 12;
     c = 6;
-    *(char*)0x10 = x;
-
-    y = &x;
-    *(char*)0x00 = 0x16;
-
-    // __asm__("LDY %v", y+1);  // Load high byte of address into Y
-    // __asm__("LDA (%v),Y", y);  // Load byte at address into A
-    // __asm__("STA $02");  // Store A at address
-    
-    
-
-
-    // *(char*)0x00 = __A__;
-    // __asm__("STA $01");
-
-    
-    // x = 3;
-    // *(char*)0x14 = *y;
-
-
-
-    // __asm__("LDA _x");
-    // __asm__("STA $05"); 
-
-    // char y = 7;
-    // *(char*)0x00 = y;
-
-
-    // *(char*)0x00 = 16;
-
-
-    // *(char*)0x00 = x; // <-- may be an error with expr parsing, but also x doesnt exist.
-
-
-
-
-    
-
-    // __asm__("LDA #$2");
-    // __asm__("PHA");
-    // __asm__("PLA");
-    // __asm__("STA $04");
-    // __asm__("PLA");
-    // __asm__("STA $05");
-    // __asm__("PLA");
-    // __asm__("STA $06");
+    y = &c;
+    *(char*)0x03 = *y;
 
     
     return 16;

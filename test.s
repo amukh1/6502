@@ -11,28 +11,21 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.import		_malloc
 	.export		_fish
 	.export		_printChar
 	.export		_frog
 	.export		_x
-	.export		_y
 	.export		_c
-	.export		_z
-	.export		_addr_y
+	.export		_y
 	.export		_main
 
 .segment	"BSS"
 
 _x:
 	.res	1,$00
-_y:
-	.res	2,$00
 _c:
 	.res	1,$00
-_z:
-	.res	2,$00
-_addr_y:
+_y:
 	.res	2,$00
 
 ; ---------------------------------------------------------------
@@ -111,17 +104,15 @@ _addr_y:
 	sta     _x
 	lda     #$06
 	sta     _c
-	lda     _x
-	sta     $0010
-	lda     #>(_x)
-	sta     _y+1
-	lda     #<(_x)
+	lda     #<(_c)
+	ldx     #>(_c)
 	sta     _y
-	lda     #$16
-	sta     $0000
-	ldx     #$00
-	lda     #$08
-	jsr     _malloc
+	stx     _y+1
+	sta     ptr1
+	stx     ptr1+1
+	ldy     #$00
+	lda     (ptr1),y
+	sta     $0003
 	ldx     #$00
 	lda     #$10
 	rts
