@@ -6,13 +6,6 @@
 
 #pragma bss-name(push, "BSS")
 
-
-// unsigned char cd = 0x02;
-
-int fish(int x) {
-    return x;
-}
-
 void printChar(char c) {
     // get the address of the char
     int x = (int)&c;
@@ -21,10 +14,10 @@ void printChar(char c) {
 
 int frog() {
     __asm__("LDA #70");
-    __asm__("STA $00");
+    __asm__("STA $01");
     __asm__("LDA #$00");
     __asm__("STA $FFFC");
-    __asm__("LDA #$00");
+    __asm__("LDA #$01");
     __asm__("STA $FFFD");
 
     __asm__("LDA #$80");
@@ -32,19 +25,34 @@ int frog() {
     return 0;
 }
 
+void printStr(char* s) {
+    // syscall operands
+    *(char*)0xFFFC = (uint16_t)s >> 8;
+    *(char*)0xFFFD = (char)s & 0xFF;
+
+    // syscall
+    *(char*)0xFFFB = 0x80;
+}
+
 char x;
-char c;
 char* y;
 char* s;
 int main() {
-    x = 0x0c;
-    c = 0x16; // let me sleep
+    x = 6;
+    *(char*)0x0210 = 0x12;
 
-    // x = 12;
-    // c = 6;
-    // y = &c;
-    // *(char*)0x03 = *y;
-    
+    y = (char*)0x0211;
 
-    return 16;
+    *y = 0x13;
+
+    s = (char*)"Hello World!\n";
+
+    // syscall operands
+    *(char*)0xFFFC = (uint16_t)s >> 8;
+    *(char*)0xFFFD = (char)s & 0xFF;
+
+    // syscall
+    *(char*)0xFFFB = 0x80;
+
+    return 0;
 }

@@ -11,45 +11,27 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.export		_fish
 	.export		_printChar
 	.export		_frog
+	.export		_printStr
 	.export		_x
-	.export		_c
 	.export		_y
 	.export		_s
 	.export		_main
+
+.segment	"RODATA"
+
+L002A:
+	.byte	$48,$65,$6C,$6C,$6F,$20,$57,$6F,$72,$6C,$64,$21,$0A,$00
 
 .segment	"BSS"
 
 _x:
 	.res	1,$00
-_c:
-	.res	1,$00
 _y:
 	.res	2,$00
 _s:
 	.res	2,$00
-
-; ---------------------------------------------------------------
-; int __near__ fish (int)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_fish: near
-
-.segment	"CODE"
-
-	jsr     pushax
-	ldy     #$01
-	lda     (sp),y
-	tax
-	dey
-	lda     (sp),y
-	jmp     incsp2
-
-.endproc
 
 ; ---------------------------------------------------------------
 ; void __near__ printChar (unsigned char)
@@ -81,15 +63,39 @@ _s:
 .segment	"CODE"
 
 	lda     #70
-	sta     $00
+	sta     $01
 	lda     #$00
 	sta     $FFFC
+	lda     #$01
 	sta     $FFFD
 	lda     #$80
 	sta     $FFFB
 	ldx     #$00
 	txa
 	rts
+
+.endproc
+
+; ---------------------------------------------------------------
+; void __near__ printStr (__near__ unsigned char *)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_printStr: near
+
+.segment	"CODE"
+
+	jsr     pushax
+	ldy     #$01
+	lda     (sp),y
+	sta     $FFFC
+	dey
+	lda     (sp),y
+	sta     $FFFD
+	lda     #$80
+	sta     $FFFB
+	jmp     incsp2
 
 .endproc
 
@@ -103,12 +109,31 @@ _s:
 
 .segment	"CODE"
 
-	lda     #$0C
+	lda     #$06
 	sta     _x
-	lda     #$16
-	sta     _c
+	lda     #$12
+	sta     $0210
+	ldx     #$02
+	lda     #$11
+	sta     _y
+	stx     _y+1
+	sta     ptr1
+	stx     ptr1+1
+	lda     #$13
+	ldy     #$00
+	sta     (ptr1),y
+	lda     #>(L002A)
+	sta     _s+1
+	lda     #<(L002A)
+	sta     _s
+	lda     _s+1
+	sta     $FFFC
+	lda     _s
+	sta     $FFFD
+	lda     #$80
+	sta     $FFFB
 	ldx     #$00
-	lda     #$10
+	txa
 	rts
 
 .endproc

@@ -29,7 +29,6 @@ void Memory::Write(WORD Address, BYTE Data) {
         std::cout << "Address out of range" << std::endl;
         return;
     } else if(Address == 0xFFFB) {
-        // std::cout << "SYSCALL" << std::endl;
         if(Data == 0x00) {
             return;
         }else if(Data == 0x80 || Data == 0x81) {
@@ -208,19 +207,19 @@ void CPU::LDA(std::unique_ptr<Memory>& mem) {
         PC+=2;
     }else if(mem->Read(PC) == 0xB5) { // X-indexed zero page
         WORD address = (WORD)mem->Read(PC+1);
-        BYTE operand = mem->Read(address + X);
+        BYTE operand = mem->Read((address + X) & 0xFF);
         A = operand;
         PC++;
     }else if(mem->Read(PC) == 0xA1) { // X-indexed indirect
         WORD address = (WORD)mem->Read(PC+1);
-        BYTE operand = mem->Read(mem->Read(address + X));
+        BYTE operand = mem->Read(mem->Read((address + X) & 0xFF) | (mem->Read((address + X + 1) & 0xFF) << 8));
         A = operand;
         PC++;
     }else if(mem->Read(PC) == 0xB1) { // ZP- Y-indexed indirect
         // WORD address = (WORD)mem->Read(PC+1);
-        WORD address = 0x00 << 8 | mem->Read(PC+1);
-        BYTE operand = mem->Read(mem->Read(address) + Y);
-        A = operand;
+        BYTE operand = mem->Read(PC+1);
+        WORD address = (mem->Read(operand) | (mem->Read(operand+1) << 8));
+        A = mem->Read((WORD)address + Y);
         PC++;
     }
 
@@ -287,12 +286,26 @@ void CPU::LDY(std::unique_ptr<Memory>& mem) {
 }
 
 void CPU::STA(std::unique_ptr<Memory>& mem) {
-    if(mem->Read(PC) == 0x8D) {
+    if(mem->Read(PC) == 0x8D) { //absolute
         WORD address = (mem->Read(PC+2)<<8) | mem->Read(PC+1);
         mem->Write((WORD)address, A);
         PC+=2;
-    }else if(mem->Read(PC) == 0x85) {
+    }else if(mem->Read(PC) == 0x85) { // zero page
         mem->Write((WORD)mem->Read(PC+1), A);
+        PC++;
+    }else if(mem->Read(PC) == 0x81) { // X-indexed ZP indirect
+        BYTE operand = (mem->Read(PC+1)+X) & 0xFF;
+        WORD address = (mem->Read(operand) | (mem->Read(operand+1) << 8));
+        mem->Write((WORD)address, A);
+        PC++;
+    }else if(mem->Read(PC) == 0x91) { // ZP- Y-indexed indirect
+        BYTE zpAddress = mem->Read(PC+1);
+        WORD address = (mem->Read((zpAddress + 1) & 0xFF) << 8) | mem->Read(zpAddress);
+        mem->Write(address + Y, A);
+        PC++;
+    }else if(mem->Read(PC) == 0x95) { // X-indexed zero page
+        WORD address = (WORD)mem->Read(PC+1);
+        mem->Write((WORD)(address + X), A);
         PC++;
     }
     // std::cout << "STA" << std::endl;

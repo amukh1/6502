@@ -28,6 +28,12 @@ void CPU::FillMatrix() {
 
    Matrix[0x8D] = "STA";
    Matrix[0x85] = "STA";
+    Matrix[0x9D] = "STA";
+    Matrix[0x99] = "STA";
+    Matrix[0x95] = "STA";
+    Matrix[0x91] = "STA";
+    Matrix[0x81] = "STA";
+    
    Matrix[0x8E] = "STX";
    Matrix[0x86] = "STX";
    Matrix[0x84] = "STY";
