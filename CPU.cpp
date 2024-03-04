@@ -403,16 +403,16 @@ void CPU::TYA(std::unique_ptr<Memory>& mem) {
 }
 
 void CPU::PHA(std::unique_ptr<Memory>& mem) {
-    mem->Write((WORD)SP, A);
     SP--;
+    mem->Write(0x0100 + SP, A);
 }
 
 void CPU::PHP(std::unique_ptr<Memory>& mem) {
     BYTE PS = 0;
     // fill processor status
     PS = (N << 7) | (V << 6) | (BR << 4) | (B << 3) | (D << 2) | (I << 1) | (Z << 0);
-    mem->Write((WORD)SP, PS);
     SP--;
+    mem->Write(0x0100 + SP, PS);
 }
 
 void CPU::PLA(std::unique_ptr<Memory>& mem) {

@@ -1,5 +1,4 @@
 // #include <stdio.h>
-// #include <6502.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "./include/6502.h"
@@ -34,11 +33,21 @@ void printStr(char* s) {
     *(char*)0xFFFB = 0x80;
 }
 
-char x;
-char* y;
-char* s;
+void test(char a, char b) {
+    *(char*)0x10 = a;
+    *(char*)0x11 = b;
+}
+
 int main() {
-    x = 6;
+    test(0x12, 0x34);
+
+    return 0;
+}
+
+
+/*
+
+x = 6;
     *(char*)0x0210 = 0x12;
 
     y = (char*)0x0211;
@@ -53,6 +62,5 @@ int main() {
 
     // syscall
     *(char*)0xFFFB = 0x80;
-
-    return 0;
-}
+    
+*/

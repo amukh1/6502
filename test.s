@@ -14,24 +14,8 @@
 	.export		_printChar
 	.export		_frog
 	.export		_printStr
-	.export		_x
-	.export		_y
-	.export		_s
+	.export		_test
 	.export		_main
-
-.segment	"RODATA"
-
-L002A:
-	.byte	$48,$65,$6C,$6C,$6F,$20,$57,$6F,$72,$6C,$64,$21,$0A,$00
-
-.segment	"BSS"
-
-_x:
-	.res	1,$00
-_y:
-	.res	2,$00
-_s:
-	.res	2,$00
 
 ; ---------------------------------------------------------------
 ; void __near__ printChar (unsigned char)
@@ -100,6 +84,27 @@ _s:
 .endproc
 
 ; ---------------------------------------------------------------
+; void __near__ test (unsigned char, unsigned char)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_test: near
+
+.segment	"CODE"
+
+	jsr     pusha
+	ldy     #$01
+	lda     (sp),y
+	sta     $0010
+	dey
+	lda     (sp),y
+	sta     $0011
+	jmp     incsp2
+
+.endproc
+
+; ---------------------------------------------------------------
 ; int __near__ main (void)
 ; ---------------------------------------------------------------
 
@@ -109,29 +114,10 @@ _s:
 
 .segment	"CODE"
 
-	lda     #$06
-	sta     _x
 	lda     #$12
-	sta     $0210
-	ldx     #$02
-	lda     #$11
-	sta     _y
-	stx     _y+1
-	sta     ptr1
-	stx     ptr1+1
-	lda     #$13
-	ldy     #$00
-	sta     (ptr1),y
-	lda     #>(L002A)
-	sta     _s+1
-	lda     #<(L002A)
-	sta     _s
-	lda     _s+1
-	sta     $FFFC
-	lda     _s
-	sta     $FFFD
-	lda     #$80
-	sta     $FFFB
+	jsr     pusha
+	lda     #$34
+	jsr     _test
 	ldx     #$00
 	txa
 	rts
