@@ -1,37 +1,8 @@
-// #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "./include/6502.h"
 
 #pragma bss-name(push, "BSS")
-
-void printChar(char c) {
-    // get the address of the char
-    int x = (int)&c;
-    __asm__("NOP");
-}
-
-int frog() {
-    __asm__("LDA #70");
-    __asm__("STA $01");
-    __asm__("LDA #$00");
-    __asm__("STA $FFFC");
-    __asm__("LDA #$01");
-    __asm__("STA $FFFD");
-
-    __asm__("LDA #$80");
-    __asm__("STA $FFFB");
-    return 0;
-}
-
-void printStr(char* s) {
-    // syscall operands
-    *(char*)0xFFFC = (uint16_t)s >> 8;
-    *(char*)0xFFFD = (char)s & 0xFF;
-
-    // syscall
-    *(char*)0xFFFB = 0x80;
-}
 
 void test(char a, char b) {
     *(char*)0x10 = a;
@@ -39,11 +10,11 @@ void test(char a, char b) {
 }
 
 int main() {
-    test(0x12, 0x34);
+    char x = 4;
+    char y = 5;
 
     return 0;
 }
-
 
 /*
 

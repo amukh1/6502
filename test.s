@@ -11,77 +11,8 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.export		_printChar
-	.export		_frog
-	.export		_printStr
 	.export		_test
 	.export		_main
-
-; ---------------------------------------------------------------
-; void __near__ printChar (unsigned char)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_printChar: near
-
-.segment	"CODE"
-
-	jsr     pusha
-	lda     sp
-	ldx     sp+1
-	jsr     pushax
-	nop
-	jmp     incsp3
-
-.endproc
-
-; ---------------------------------------------------------------
-; int __near__ frog (void)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_frog: near
-
-.segment	"CODE"
-
-	lda     #70
-	sta     $01
-	lda     #$00
-	sta     $FFFC
-	lda     #$01
-	sta     $FFFD
-	lda     #$80
-	sta     $FFFB
-	ldx     #$00
-	txa
-	rts
-
-.endproc
-
-; ---------------------------------------------------------------
-; void __near__ printStr (__near__ unsigned char *)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_printStr: near
-
-.segment	"CODE"
-
-	jsr     pushax
-	ldy     #$01
-	lda     (sp),y
-	sta     $FFFC
-	dey
-	lda     (sp),y
-	sta     $FFFD
-	lda     #$80
-	sta     $FFFB
-	jmp     incsp2
-
-.endproc
 
 ; ---------------------------------------------------------------
 ; void __near__ test (unsigned char, unsigned char)
@@ -114,13 +45,13 @@
 
 .segment	"CODE"
 
-	lda     #$12
+	lda     #$04
 	jsr     pusha
-	lda     #$34
-	jsr     _test
+	lda     #$05
+	jsr     pusha
 	ldx     #$00
 	txa
-	rts
+	jmp     incsp2
 
 .endproc
 
