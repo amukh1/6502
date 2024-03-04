@@ -12,6 +12,7 @@
 	.macpack	longbranch
 	.forceimport	__STARTUP__
 	.export		_test
+	.export		_test2
 	.export		_main
 
 ; ---------------------------------------------------------------
@@ -26,12 +27,35 @@
 
 	jsr     pusha
 	ldy     #$01
+	ldx     #$00
 	lda     (sp),y
 	sta     $0010
-	dey
+	ldy     #$00
+	ldx     #$00
 	lda     (sp),y
 	sta     $0011
-	jmp     incsp2
+	jsr     incsp2
+	rts
+
+.endproc
+
+; ---------------------------------------------------------------
+; void __near__ test2 (unsigned char)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_test2: near
+
+.segment	"CODE"
+
+	jsr     pusha
+	ldy     #$00
+	ldx     #$00
+	lda     (sp),y
+	sta     $0012
+	jsr     incsp1
+	rts
 
 .endproc
 
@@ -45,13 +69,32 @@
 
 .segment	"CODE"
 
-	lda     #$04
-	jsr     pusha
-	lda     #$05
-	jsr     pusha
+	jsr     decsp2
 	ldx     #$00
-	txa
-	jmp     incsp2
+	lda     #$06
+	ldy     #$01
+	sta     (sp),y
+	ldy     #$01
+	lda     (sp),y
+	jsr     _test2
+	ldx     #$00
+	lda     #$04
+	ldy     #$00
+	sta     (sp),y
+	ldy     #$00
+	lda     (sp),y
+	jsr     _test2
+	ldy     #$01
+	lda     (sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (sp),y
+	jsr     _test
+	ldx     #$00
+	lda     #$00
+	jmp     L000A
+L000A:	jsr     incsp2
+	rts
 
 .endproc
 

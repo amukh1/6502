@@ -9,10 +9,18 @@ void test(char a, char b) {
     *(char*)0x11 = b;
 }
 
-int main() {
-    char x = 4;
-    char y = 5;
+void test2(char a) {
+    *(char*)0x12 = a;
+}
 
+int main() {
+    char y;
+    char z;
+    y = 6;
+    test2(y);
+    z = 4;
+    test2(z);
+    test(y,z);
     return 0;
 }
 
