@@ -71,7 +71,7 @@
 
 	jsr     decsp1
 	ldx     #$00
-	lda     #$02
+	lda     #$04
 	ldy     #$00
 	sta     (sp),y
 	ldx     #$00

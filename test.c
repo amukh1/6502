@@ -1,5 +1,5 @@
 // #include <stdlib.h>
-// #include <stdint.h>
+#include <stdint.h>
 // #include "./include/6502.h"
 
 void testm(char a, char b) {
@@ -11,10 +11,10 @@ void tests(char s) {
     *(char*)0x10 = s;
 }
 
-// char x;
 int main() {
     char x;
-    x = 2;
+    x = 4;
+
     return 0;
 }
 
