@@ -7,6 +7,10 @@ __STARTUP__:
     ldx #$ff
     txs
 
+    ; init software stack pointer
+    lda #$01
+    sta sp
+
     ; Call the main function
     jsr _main
 
@@ -14,6 +18,6 @@ __STARTUP__:
     ; jmp *
 
     ; Interrupt vectors
-    .word $0000 ; NMI
+    ; .word $0000 ; NMI
     .word __STARTUP__ ; RESET
     .word $0000 ; IRQ

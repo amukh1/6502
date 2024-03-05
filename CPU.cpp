@@ -304,8 +304,8 @@ void CPU::STA(std::unique_ptr<Memory>& mem) {
         mem->Write(address + Y, A);
         PC++;
     }else if(mem->Read(PC) == 0x95) { // X-indexed zero page
-        WORD address = (WORD)mem->Read(PC+1);
-        mem->Write((WORD)(address + X), A);
+        BYTE address = (BYTE)mem->Read(PC+1);
+        mem->Write((WORD)(BYTE)(address + X), A);
         PC++;
     }
     // std::cout << "STA" << std::endl;

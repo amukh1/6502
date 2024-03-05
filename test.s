@@ -11,17 +11,17 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.export		_test
-	.export		_test2
+	.export		_testm
+	.export		_tests
 	.export		_main
 
 ; ---------------------------------------------------------------
-; void __near__ test (unsigned char, unsigned char)
+; void __near__ testm (unsigned char, unsigned char)
 ; ---------------------------------------------------------------
 
 .segment	"CODE"
 
-.proc	_test: near
+.proc	_testm: near
 
 .segment	"CODE"
 
@@ -40,12 +40,12 @@
 .endproc
 
 ; ---------------------------------------------------------------
-; void __near__ test2 (unsigned char)
+; void __near__ tests (unsigned char)
 ; ---------------------------------------------------------------
 
 .segment	"CODE"
 
-.proc	_test2: near
+.proc	_tests: near
 
 .segment	"CODE"
 
@@ -53,7 +53,7 @@
 	ldy     #$00
 	ldx     #$00
 	lda     (sp),y
-	sta     $0012
+	sta     $0010
 	jsr     incsp1
 	rts
 
@@ -69,31 +69,15 @@
 
 .segment	"CODE"
 
-	jsr     decsp2
+	jsr     decsp1
 	ldx     #$00
-	lda     #$06
-	ldy     #$01
-	sta     (sp),y
-	ldy     #$01
-	lda     (sp),y
-	jsr     _test2
-	ldx     #$00
-	lda     #$04
+	lda     #$02
 	ldy     #$00
 	sta     (sp),y
-	ldy     #$00
-	lda     (sp),y
-	jsr     _test2
-	ldy     #$01
-	lda     (sp),y
-	jsr     pusha
-	ldy     #$01
-	lda     (sp),y
-	jsr     _test
 	ldx     #$00
 	lda     #$00
-	jmp     L000A
-L000A:	jsr     incsp2
+	jmp     L0009
+L0009:	jsr     incsp1
 	rts
 
 .endproc
