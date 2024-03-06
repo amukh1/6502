@@ -1,38 +1,53 @@
-.export _init, _exit
-.exportzp sp
-.import _main
+; ---------------------------------------------------------------------------
+; crt0.s
+; ---------------------------------------------------------------------------
+;
+; Startup code for cc65 (Single Board Computer version)
 
-.export __STARTUP__: absolute = 1
-.import __RAM_START__, __RAM_SIZE__
+.export   _init, _exit
+.import   _main
 
-.import copydata, zerobss, initlib, donelib
+.export   __STARTUP__ : absolute = 1        ; Mark as startup
+.import   __RAM_START__, __RAM_SIZE__       ; Linker generated
 
-; .include "zeropage.inc"
+.import    copydata, zerobss, initlib, donelib
 
-; reserve byte or sp
-.segment "ZEROPAGE"
-sp: .res 1
+.include  "zeropage.inc"
 
+; ---------------------------------------------------------------------------
+; Place the startup code in a special segment
 
+.segment  "STARTUP"
 
-.segment "STARTUP"
+; ---------------------------------------------------------------------------
+; A little light 6502 housekeeping
 
-_init: ldx #$ff
-        txs
-        cld
+_init:    LDX     #$FF                 ; Initialize stack pointer to $01FF
+          TXS
+          CLD                          ; Clear decimal mode
 
-        lda #<(__RAM_START__ + __RAM_SIZE__)
-        STA sp
-        lda #>(__RAM_START__ + __RAM_SIZE__)
-        STA sp+1
+; ---------------------------------------------------------------------------
+; Set cc65 argument stack pointer
 
-        jsr zerobss
-        jsr copydata
-        jsr initlib
+          LDA     #<(__RAM_START__ + __RAM_SIZE__)
+          STA     sp
+          LDA     #>(__RAM_START__ + __RAM_SIZE__)
+          STA     sp+1
 
-        jsr _main
+; ---------------------------------------------------------------------------
+; Initialize memory storage
 
-_exit:
-        jsr donelib
-        brk
+          JSR     zerobss              ; Clear BSS segment
+          JSR     copydata             ; Initialize DATA segment
+          JSR     initlib              ; Run constructors
 
+; ---------------------------------------------------------------------------
+; Call main()
+
+          JSR     _main
+
+; ---------------------------------------------------------------------------
+; Back from main (this is also the _exit entry):  force a software break
+
+_exit:    JSR     donelib              ; Run destructors
+          BRK

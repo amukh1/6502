@@ -3,3 +3,5 @@ https://www.pagetable.com/?p=410
 https://pegvin.github.io/6502/index.html
 https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf
 vasm6502_std -Fbin -Felf -mid=PC386 test.asm -o out
+https://cc65.github.io/doc/customizing.html#s1
+/usr/share/cc65
