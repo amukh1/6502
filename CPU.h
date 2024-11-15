@@ -21,11 +21,11 @@ struct Memory {
 
 
 struct CPU {
-    WORD PC = 0xFFFC;
-    BYTE SP = (BYTE) 0;
-    BYTE A, X, Y;
+    WORD PC = 0xFFFC; // program counter
+    BYTE SP = (BYTE) 0; // stack counter
+    BYTE A, X, Y; // registers
     // _BIT CF, ZF, ID, DM, BC, OF, NF, _BRK;
-    _BIT N, V, BR, B, D, I, Z, C;
+    _BIT N, V, BR, B, D, I, Z, C; // flags
     
     int Cycle = 0;
 
